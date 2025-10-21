@@ -42,6 +42,8 @@ venv.bak/
 
 # Data Files - All data will be provided via cloud drive
 data/*/
+data/question_templates.jsonl
+data/user_persona.jsonl
 
 # Generated outputs
 generation/data/
