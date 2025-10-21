@@ -1,0 +1,25 @@
+# Core LLM and Embeddings
+openai>=1.0.0
+llama-index>=0.10.0
+llama-index-core>=0.10.0
+llama-index-llms-openai>=0.1.0
+llama-index-embeddings-openai>=0.1.0
+
+# Data processing
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Progress bars and utilities
+tqdm>=4.65.0
+
+# Chinese word segmentation (for BM25)
+jieba>=0.42.1
+
+# Async support
+asyncio>=3.4.3
+
+# Path handling
+pathlib>=1.0.1
+
+# Optional: Environment variables
+python-dotenv>=1.0.0

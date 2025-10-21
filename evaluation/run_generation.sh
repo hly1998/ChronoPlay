@@ -1,0 +1,1 @@
+python generation_runner.py --retrieval_file retrieval_results/retrieval_dune_segment_1_text_embedding_3_small_k5.jsonl --llm_model gpt-4o

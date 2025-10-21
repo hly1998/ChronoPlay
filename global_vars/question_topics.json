@@ -1,0 +1,370 @@
+{
+    "purchase_related": {
+        "code": "PURCHASE",
+        "description": "Questions related to game purchase, version selection, platform selection, etc.",
+        "subcategories": {
+            "purchase_consultation": {
+                "code": "PURCHASE_CONSULTATION",
+                "description": "Inquiries about whether to buy, where to buy, how to buy, etc.",
+                "keywords": [
+                    "buy",
+                    "purchase",
+                    "get",
+                    "worth",
+                    "recommend",
+                    "choose"
+                ],
+                "examples": [
+                    "Is this game worth buying?",
+                    "Should I buy on Steam or Epic?",
+                    "Should I buy now or wait for a sale?"
+                ]
+            },
+            "version_comparison": {
+                "code": "VERSION_COMPARISON",
+                "description": "Differences between versions (standard, deluxe, etc.) and selection advice",
+                "keywords": [
+                    "version",
+                    "standard",
+                    "deluxe",
+                    "ultimate",
+                    "difference",
+                    "comparison"
+                ],
+                "examples": [
+                    "What's the difference between standard and deluxe edition?",
+                    "Is the deluxe edition content worth it?"
+                ]
+            },
+            "platform_selection": {
+                "code": "PLATFORM_SELECTION",
+                "description": "Selection advice for different platforms (PC, console)",
+                "keywords": [
+                    "platform",
+                    "PC",
+                    "console",
+                    "Steam",
+                    "Epic",
+                    "PlayStation",
+                    "Xbox"
+                ],
+                "examples": [
+                    "Which is better, PC or console version?",
+                    "Which platform suits my configuration?"
+                ]
+            },
+            "preorder_rewards": {
+                "code": "PREORDER_REWARDS",
+                "description": "Questions about preorder rewards, bonuses, keys, etc.",
+                "keywords": [
+                    "preorder",
+                    "reward",
+                    "bonus",
+                    "key",
+                    "pack",
+                    "DLC"
+                ],
+                "examples": [
+                    "What are the preorder rewards?",
+                    "Can I still get preorder rewards with a key?"
+                ]
+            }
+        }
+    },
+    "technical_support": {
+        "code": "TECHNICAL",
+        "description": "Questions related to game technology, performance, compatibility, etc.",
+        "subcategories": {
+            "system_requirements": {
+                "code": "SYSTEM_REQUIREMENTS",
+                "description": "Minimum requirements, recommended specs, hardware compatibility, etc.",
+                "keywords": [
+                    "requirements",
+                    "specs",
+                    "graphics",
+                    "CPU",
+                    "memory",
+                    "storage",
+                    "compatible"
+                ],
+                "examples": [
+                    "Can my GTX 1066 run this game?",
+                    "What are the minimum system requirements?"
+                ]
+            },
+            "performance_issues": {
+                "code": "PERFORMANCE_ISSUES",
+                "description": "Performance-related issues like framerate, graphics quality, optimization",
+                "keywords": [
+                    "framerate",
+                    "FPS",
+                    "lag",
+                    "optimization",
+                    "graphics",
+                    "resolution",
+                    "4K"
+                ],
+                "examples": [
+                    "How to improve game framerate?",
+                    "Can RTX 2080s maintain stable 60fps?"
+                ]
+            },
+            "crash_errors": {
+                "code": "CRASH_ERRORS",
+                "description": "Technical issues like game crashes, freezes, errors",
+                "keywords": [
+                    "crash",
+                    "freeze",
+                    "error",
+                    "black screen",
+                    "won't start",
+                    "hang"
+                ],
+                "examples": [
+                    "Game keeps crashing, what to do?",
+                    "Getting error code on startup"
+                ]
+            },
+            "network_connection": {
+                "code": "NETWORK_CONNECTION",
+                "description": "Issues with multiplayer, server connection, network latency",
+                "keywords": [
+                    "multiplayer",
+                    "server",
+                    "connection",
+                    "latency",
+                    "disconnect",
+                    "network"
+                ],
+                "examples": [
+                    "Can't connect to server",
+                    "High latency during multiplayer"
+                ]
+            }
+        }
+    },
+    "game_content": {
+        "code": "GAME_CONTENT",
+        "description": "Questions related to gameplay, content, mechanics, etc.",
+        "subcategories": {
+            "gameplay_mechanics": {
+                "code": "GAMEPLAY_MECHANICS",
+                "description": "Basic gameplay, controls, mechanics, etc.",
+                "keywords": [
+                    "gameplay",
+                    "controls",
+                    "mechanics",
+                    "system",
+                    "rules",
+                    "how to play"
+                ],
+                "examples": [
+                    "How do you play this game?",
+                    "What's the combat system like?"
+                ]
+            },
+            "content_features": {
+                "code": "CONTENT_FEATURES",
+                "description": "Game's unique content, modes, features, etc.",
+                "keywords": [
+                    "features",
+                    "mode",
+                    "elements",
+                    "content",
+                    "world",
+                    "story"
+                ],
+                "examples": [
+                    "What unique features does the game have?",
+                    "How big is the open world?"
+                ]
+            },
+            "progress_guide": {
+                "code": "PROGRESS_GUIDE",
+                "description": "Game progression, guides, tips and instructional questions",
+                "keywords": [
+                    "guide",
+                    "tips",
+                    "progress",
+                    "complete",
+                    "collect",
+                    "quest"
+                ],
+                "examples": [
+                    "What should beginners pay attention to?",
+                    "How to level up quickly?"
+                ]
+            },
+            "version_updates": {
+                "code": "VERSION_UPDATES",
+                "description": "Questions about game versions, updates, patches, etc.",
+                "keywords": [
+                    "version",
+                    "update",
+                    "patch",
+                    "fix",
+                    "new content",
+                    "update content"
+                ],
+                "examples": [
+                    "What's new in the latest update?",
+                    "When will there be a new patch?"
+                ]
+            }
+        }
+    },
+    "social_interaction": {
+        "code": "SOCIAL",
+        "description": "Questions related to multiplayer gaming, social features, communication, etc.",
+        "subcategories": {
+            "team_cooperation": {
+                "code": "TEAM_COOPERATION",
+                "description": "Finding teammates, forming teams, cooperation and other social needs",
+                "keywords": [
+                    "team",
+                    "cooperation",
+                    "teammates",
+                    "play together",
+                    "squad",
+                    "multiplayer"
+                ],
+                "examples": [
+                    "Anyone want to play together?",
+                    "How to find suitable teammates?"
+                ]
+            },
+            "friend_system": {
+                "code": "FRIEND_SYSTEM",
+                "description": "Friend system issues like adding friends, friend features, etc.",
+                "keywords": [
+                    "friends",
+                    "add",
+                    "friend list",
+                    "social system"
+                ],
+                "examples": [
+                    "How to add friends?",
+                    "How to use the friend system?"
+                ]
+            },
+            "community_events": {
+                "code": "COMMUNITY_EVENTS",
+                "description": "Official events, community activities, competitions, etc.",
+                "keywords": [
+                    "events",
+                    "competition",
+                    "community",
+                    "official events",
+                    "rewards"
+                ],
+                "examples": [
+                    "What events are happening recently?",
+                    "How to participate in community competitions?"
+                ]
+            }
+        }
+    },
+    "after_sales_service": {
+        "code": "AFTER_SALES",
+        "description": "Questions related to refunds, customer service, complaints and other after-sales issues",
+        "subcategories": {
+            "refund_policy": {
+                "code": "REFUND_POLICY",
+                "description": "Refund conditions, process, policies, etc.",
+                "keywords": [
+                    "refund",
+                    "money back",
+                    "unsatisfied",
+                    "request refund",
+                    "refund conditions"
+                ],
+                "examples": [
+                    "How to request a refund?",
+                    "Under what circumstances can I get a refund?"
+                ]
+            },
+            "customer_support": {
+                "code": "CUSTOMER_SUPPORT",
+                "description": "Customer service contact, feedback, complaints, etc.",
+                "keywords": [
+                    "customer service",
+                    "feedback",
+                    "complaint",
+                    "contact",
+                    "support"
+                ],
+                "examples": [
+                    "How to contact customer service?",
+                    "Where to report issues?"
+                ]
+            },
+            "account_issues": {
+                "code": "ACCOUNT_ISSUES",
+                "description": "Account, activation key, permissions and other issues",
+                "keywords": [
+                    "account",
+                    "activation key",
+                    "permissions",
+                    "login",
+                    "verification"
+                ],
+                "examples": [
+                    "Can't log into my account, what to do?",
+                    "How to handle invalid activation key?"
+                ]
+            }
+        }
+    },
+    "review_discussion": {
+        "code": "REVIEW_DISCUSSION",
+        "description": "Reviews, discussions, opinions about the game",
+        "subcategories": {
+            "review_questions": {
+                "code": "REVIEW_QUESTIONS",
+                "description": "Questions about game reviews and ratings",
+                "keywords": [
+                    "review",
+                    "rating",
+                    "one star",
+                    "positive",
+                    "negative",
+                    "why"
+                ],
+                "examples": [
+                    "Why is the rating so low?",
+                    "Is the game really that bad?"
+                ]
+            },
+            "comparison_discussion": {
+                "code": "COMPARISON_DISCUSSION",
+                "description": "Comparison discussions with other games",
+                "keywords": [
+                    "compare",
+                    "comparison",
+                    "which is better",
+                    "versus",
+                    "similar"
+                ],
+                "examples": [
+                    "Which is better, this game or XX game?",
+                    "Any similar game recommendations?"
+                ]
+            },
+            "expectation_concern": {
+                "code": "EXPECTATION_CONCERN",
+                "description": "Expectations, concerns, worries about the game",
+                "keywords": [
+                    "expect",
+                    "worry",
+                    "hope",
+                    "will it",
+                    "whether"
+                ],
+                "examples": [
+                    "Will the game be delayed?",
+                    "Worried about game quality issues"
+                ]
+            }
+        }
+    }
+}
