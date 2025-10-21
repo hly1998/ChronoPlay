@@ -84,7 +84,7 @@ The benchmark includes three popular games with comprehensive temporal coverage:
 | Dying Light 2 | 5 | 2,000 | Jan 22 - Jul 25 |
 | PUBG Mobile | 7 | 1,400 | Jan 24 - Jul 25 |
 
-**Download**: All data is available via cloud drive: [Download Link](#https://share.weiyun.com/HGXd33CW) (password: chrono)
+**Download**: All data is available via cloud drive: https://share.weiyun.com/HGXd33CW (password: chrono)
 
 After downloading, extract and place the `data` folder under the `chronoplay/` directory.
 
