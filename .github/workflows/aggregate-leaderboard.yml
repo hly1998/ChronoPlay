@@ -1,0 +1,50 @@
+name: Aggregate Leaderboard Results
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'leaderboard/submissions/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'leaderboard/submissions/**'
+  workflow_dispatch:
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Run aggregation script
+      run: |
+        cd leaderboard
+        python aggregate.py
+        
+    - name: Commit updated leaderboard
+      if: github.event_name != 'pull_request'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add leaderboard/leaderboard.json
+        git diff --staged --quiet || git commit -m "chore: update leaderboard data [skip ci]"
+        
+    - name: Push changes
+      if: github.event_name != 'pull_request'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+

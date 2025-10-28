@@ -42,15 +42,20 @@ venv.bak/
 
 # Data Files - All data will be provided via cloud drive
 data/*/
+data/*
 data/question_templates.jsonl
 data/user_persona.jsonl
 
 # Generated outputs
 generation/data/
-evaluation/retrieval_results/
-evaluation/generation_results/
-evaluation/retrieval_evaluation/
-evaluation/index/
+generation/gen.sh
+evaluation/evaluation/*
+evaluation/*.sh
+experiments/retrieval_results/
+experiments/generation_results/
+experiments/retrieval_evaluation/
+experiments/index/
+experiments/*.sh
 
 # Logs and temporary files
 *.log

@@ -1,1 +1,0 @@
-python generation_evaluator.py --generation_results generation_results/generation_retrieval_pubgm_segment_1_text_embedding_3_small_k5_gpt_4o_t01_c3.jsonl

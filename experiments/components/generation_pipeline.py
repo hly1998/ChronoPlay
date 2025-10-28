@@ -102,13 +102,14 @@ class GenerationPipeline:
         total = len(retrieval_results)
         all_results = []
 
+        print(f"⚡ 开始生成 {total} 个结果，并发: {self.config.concurrent_requests}")
+
         # 分批处理
         for batch_start in range(0, total, self.config.concurrent_requests):
             batch_end = min(batch_start + self.config.concurrent_requests, total)
             batch_retrieval_results = retrieval_results[batch_start:batch_end]
 
-            if batch_start % 30 == 0 or batch_end == total:  # 每30个或最后一次打印进度
-                print(f"  进度: {batch_end}/{total}")
+            print(f"处理 {batch_start+1}-{batch_end}/{total}")
 
             # 创建并发任务
             tasks = [

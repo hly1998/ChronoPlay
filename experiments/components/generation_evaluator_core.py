@@ -4,7 +4,7 @@
 """
 
 import json
-import asyncio
+import time
 import numpy as np
 from typing import List, Dict, Any
 from tqdm import tqdm
@@ -59,8 +59,8 @@ class GenerationEvaluatorCore:
 
     def evaluate_metrics(
             self, data: List[Dict], metrics: List[str] = None,
-            test_mode: bool = False, concurrent_requests: int = 5) -> Dict[str, Any]:
-        """评估指标（并发执行）"""
+            test_mode: bool = False) -> Dict[str, Any]:
+        """评估指标"""
         if metrics is None:
             metrics = self.default_metrics
 
@@ -68,74 +68,39 @@ class GenerationEvaluatorCore:
             data = data[:min(5, len(data))]
             print(f"🔍 测试模式：评估 {len(data)} 个样本")
 
-        # 使用异步并发执行
-        detailed_results = asyncio.run(
-            self._evaluate_metrics_async(data, metrics, concurrent_requests)
-        )
+        detailed_results = []
+
+        for i, item in enumerate(tqdm(data, desc="评估中", unit="项")):
+            question = item['question']
+            rag_answer = item['rag_answer']
+            ground_truth = item['ground_truth_answer']
+
+            result = {'index': i, 'correctness_score': 0.0, 'faithfulness_score': 0.0}
+
+            if not rag_answer or not ground_truth:
+                detailed_results.append(result)
+                continue
+
+            if 'correctness' in metrics:
+                result['correctness_score'] = self.evaluator.evaluate_single(
+                    question, ground_truth, rag_answer
+                )
+
+            if 'faithfulness' in metrics and item['contexts']:
+                result['faithfulness_score'] = self.evaluator.evaluate_faithfulness(
+                    question, item['contexts'], rag_answer
+                )
+
+            detailed_results.append(result)
+            time.sleep(0.1)
 
         return self._calculate_statistics(detailed_results, metrics)
 
-    async def _evaluate_metrics_async(
-            self, data: List[Dict], metrics: List[str], concurrent_requests: int) -> List[Dict]:
-        """异步并发评估"""
-        semaphore = asyncio.Semaphore(concurrent_requests)
-
-        async def evaluate_single_item(i: int, item: Dict) -> Dict:
-            async with semaphore:
-                question = item['question']
-                rag_answer = item['rag_answer']
-                ground_truth = item['ground_truth_answer']
-                game_name = item.get('game_name', 'unknown')
-
-                result = {
-                    'index': i,
-                    'correctness_score': 0.0,
-                    'faithfulness_score': 0.0,
-                    'game_name': game_name
-                }
-
-                if not rag_answer or not ground_truth:
-                    return result
-
-                if 'correctness' in metrics:
-                    score = await self.evaluator.evaluate_single_async(
-                        question, ground_truth, rag_answer
-                    )
-                    # 归一化：除以2 (原始分数0-2，归一化后0-1)
-                    result['correctness_score'] = score / 2.0
-
-                if 'faithfulness' in metrics and item['contexts']:
-                    score = await self.evaluator.evaluate_faithfulness_async(
-                        question, item['contexts'], rag_answer
-                    )
-                    # 归一化：除以2 (原始分数0-2，归一化后0-1)
-                    result['faithfulness_score'] = score / 2.0
-
-                return result
-
-        # 创建所有任务
-        tasks = [evaluate_single_item(i, item) for i, item in enumerate(data)]
-
-        # 使用tqdm显示进度
-        detailed_results = []
-        with tqdm(total=len(tasks), desc="评估中", unit="项") as pbar:
-            for coro in asyncio.as_completed(tasks):
-                result = await coro
-                detailed_results.append(result)
-                pbar.update(1)
-
-        # 按索引排序，确保结果顺序正确
-        detailed_results.sort(key=lambda x: x['index'])
-
-        return detailed_results
-
     def _calculate_statistics(
             self, detailed_results: List[Dict], metrics: List[str]) -> Dict[str, Any]:
-        """计算统计信息（包括整体和按游戏分组）"""
+        """计算统计信息"""
         overall = {}
-        by_game = {}
 
-        # 计算整体指标
         if 'correctness' in metrics:
             scores = [r['correctness_score'] for r in detailed_results]
             overall['correctness'] = {
@@ -150,27 +115,7 @@ class GenerationEvaluatorCore:
                 'count': len(scores)
             }
 
-        # 按游戏分组统计
-        from collections import defaultdict
-        game_scores = defaultdict(lambda: {'correctness': [], 'faithfulness': []})
-
-        for result in detailed_results:
-            game_name = result.get('game_name', 'unknown')
-            if 'correctness' in metrics:
-                game_scores[game_name]['correctness'].append(result['correctness_score'])
-            if 'faithfulness' in metrics:
-                game_scores[game_name]['faithfulness'].append(result['faithfulness_score'])
-
-        # 计算每个游戏的平均分
-        for game_name, scores in game_scores.items():
-            by_game[game_name] = {}
-            if 'correctness' in metrics and scores['correctness']:
-                by_game[game_name]['correctness'] = float(np.mean(scores['correctness']))
-                by_game[game_name]['count'] = len(scores['correctness'])
-            if 'faithfulness' in metrics and scores['faithfulness']:
-                by_game[game_name]['faithfulness'] = float(np.mean(scores['faithfulness']))
-
-        return {'overall': overall, 'by_game': by_game}
+        return {'overall': overall}
 
     def evaluate_basic_metrics(self, data: List[Dict]) -> Dict[str, Any]:
         """评估基础指标"""

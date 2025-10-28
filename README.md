@@ -2,9 +2,17 @@
 
 This repository contains the implementation and data for **ChronoPlay**, a novel framework for automated and continuous generation of game RAG benchmarks.
 
+## 🏆 Leaderboard
+
+**View the leaderboard**: [https://hly1998.github.io/ChronoPlay/leaderboard/](https://hly1998.github.io/ChronoPlay/leaderboard/)
+
+Submit your RAG system evaluation results and compare with other approaches! See [leaderboard/README.md](leaderboard/README.md) for submission instructions.
+
 ## 📖 Overview
 
 Retrieval Augmented Generation (RAG) systems are increasingly vital in dynamic domains like online gaming, yet the lack of a dedicated benchmark has impeded standardized evaluation in this area. ChronoPlay addresses the core challenge of **Dual Dynamics**: the constant interplay between game content updates and the shifting focus of the player community.
+
+📄 **Paper**: [ChronoPlay: A Framework for Modeling Dual Dynamics and Authenticity in Game RAG Benchmarks](https://arxiv.org/pdf/2510.18455)
 
 ![ChronoPlayFramework](/images/demo.png)
 
@@ -22,6 +30,13 @@ This is the first dynamic RAG benchmark for the gaming domain, offering insights
 
 ```
 chronoplay/
+├── leaderboard/                 # Interactive Leaderboard
+│   ├── index.html              # Leaderboard webpage
+│   ├── aggregate.py            # Data aggregation script
+│   ├── leaderboard.json        # Aggregated results
+│   ├── submissions/            # User submissions
+│   └── README.md               # Submission guide
+│
 ├── data/                        # Benchmark Data (download from cloud drive)
 │   ├── dune/
 │   │   ├── corpus/             # Temporal knowledge corpus (segments 1-6 + timeless)
@@ -53,12 +68,20 @@ chronoplay/
 │   ├── prompt.py               # Generation prompts
 │   └── components              # Generation components
 │
-├── evaluation/                  # RAG Evaluation Module
-│   ├── retrieval_runner.py     # Execute retrieval
-│   ├── retrieval_evaluator.py  # Evaluate retrieval quality
-│   ├── generation_runner.py    # Execute generation
-│   ├── generation_evaluator.py # Evaluate generation quality
+├── evaluation/                  # Leaderboard Evaluation Module
+│   ├── retrieval_runner.py     # Execute retrieval for leaderboard
+│   ├── retrieval_evaluator.py  # Evaluate retrieval on leaderboard data
+│   ├── generation_runner.py    # Execute generation for leaderboard
+│   ├── generation_evaluator.py # Evaluate generation on leaderboard data
+│   ├── summarize_results.py    # Aggregate leaderboard metrics
 │   └── components              # Evaluation components
+│
+├── experiments/                 # Paper Experiments (Dual-Dynamic Analysis)
+│   ├── retrieval_runner.py     # Execute retrieval experiments
+│   ├── retrieval_evaluator.py  # Evaluate retrieval experiments
+│   ├── generation_runner.py    # Execute generation experiments
+│   ├── generation_evaluator.py # Evaluate generation experiments
+│   └── components              # Experiment components
 │
 ├── corpus/                      # Corpus Building Module
 │   ├── corpus_builder.py       # Build temporal corpus
@@ -84,9 +107,15 @@ The benchmark includes three popular games with comprehensive temporal coverage:
 | Dying Light 2 | 5 | 2,000 | Jan 22 - Jul 25 |
 | PUBG Mobile | 7 | 1,400 | Jan 24 - Jul 25 |
 
-**Download**: All data is available via cloud drive: https://share.weiyun.com/HGXd33CW (password: chrono)
+**Download Options:**
+- **Full Dataset** (with corpus): [Weiyun Cloud Drive](https://share.weiyun.com/HGXd33CW) (password: chrono)
+  - For paper experiments and reproducing dual-dynamic analysis
+  - Includes complete temporal corpus and all segments
+- **Leaderboard QA Dataset**: [🤗 HuggingFace](https://huggingface.co/datasets/leoner24/ChronoPlay-QA)
+  - For standard leaderboard evaluation and system comparison
+  - Lightweight dataset with QA pairs only
 
-After downloading, extract and place the `data` folder under the `chronoplay/` directory.
+After downloading the full dataset, extract and place the `data` folder under the `chronoplay/` directory.
 
 ### Data Components
 
@@ -129,28 +158,33 @@ pip install -r requirements.txt
 
 ### Basic Usage
 
-#### 1. Using Pre-generated Benchmark (Recommended)
+#### 1. Leaderboard Evaluation (Recommended)
 
-We provide pre-generated QA pairs in `data/{game}/segments/` ready for evaluation:
+To evaluate your RAG system on the leaderboard dataset and submit results:
+
+**👉 See [leaderboard/README.md](leaderboard/README.md) for complete instructions**
+
+The leaderboard guide includes:
+- Dataset download and setup
+- Evaluation pipeline usage
+- Metric calculations
+- Submission format and process
+
+#### 2. Paper Experiments (Dual-Dynamic Analysis)
+
+Use the `experiments/` module to reproduce the dual-dynamic experiments from the paper:
 
 ```bash
-# After downloading data to data/ directory
-# Run evaluation directly:
+cd experiments/
 
-cd evaluation/
-
-# Run retrieval
-python retrieval_runner.py --game dune --segment_id 1
-
-# Run generation
-python generation_runner.py --retrieval_file retrieval_results/retrieval_*.jsonl
-
-# Evaluate results
-python retrieval_evaluator.py --game dune --segment_id 1
-python generation_evaluator.py --generation_results generation_results/generation_*.jsonl
+# Run full experimental pipeline
+bash run_retrieval.sh
+bash run_generation.sh
+bash run_retrieval_evaluator.sh
+bash run_generation_evaluator.sh
 ```
 
-#### 2. Generating New QA Pairs
+#### 3. Generating New QA Pairs
 
 To generate QA pairs for your own data or extend to new games:
 
@@ -175,7 +209,7 @@ python generation.py \
 - **QA Refinement**: LLM-based optimization
 - **QA Inheritance**: Reuses valid QA pairs across segments
 
-#### 3. Building Custom Corpus
+#### 4. Building Custom Corpus
 
 To build corpus from your own game documentation:
 
@@ -226,58 +260,31 @@ done
 
 ### Stage 3: RAG Pipeline Evaluation
 
-#### Step 3.1: Execute RAG Pipeline
+Choose between two evaluation paths:
 
-**Retrieval:**
+#### Option A: Leaderboard Evaluation (`evaluation/`)
+
+For submitting to the official leaderboard and comparing with other systems.
+
+**👉 See [leaderboard/README.md](leaderboard/README.md) for complete evaluation instructions**
+
+#### Option B: Dual-Dynamic Experiments (`experiments/`)
+
+For reproducing paper results and analyzing temporal dynamics:
+
 ```bash
-cd evaluation/
+cd experiments/
 
-# Vector retrieval
-python retrieval_runner.py \
-    --game dune \
-    --segment_id 1 \
-    --retrieval_method vector \
-    --top_k 5
-
-# BM25 retrieval
-python retrieval_runner.py \
-    --game dune \
-    --segment_id 1 \
-    --retrieval_method bm25 \
-    --top_k 5
+# Run complete experimental workflow
+bash run_retrieval.sh
+bash run_generation.sh
+bash run_retrieval_evaluator.sh
+bash run_generation_evaluator.sh
 ```
 
-**Generation:**
-```bash
-python generation_runner.py \
-    --retrieval_file retrieval_results/retrieval_dune_segment_1.jsonl \
-    --llm_model gpt-4o \
-    --temperature 0.1
-```
-
-#### Step 3.2: Evaluate Results
-
-**Retrieval Evaluation:**
-```bash
-python retrieval_evaluator.py \
-    --game dune \
-    --segment_id 1 \
-    --results_dir retrieval_results/
-```
-
-Metrics: Recall@K, MRR, NDCG
-
-**Generation Evaluation:**
-```bash
-python generation_evaluator.py \
-    --generation_results generation_results/generation_*.jsonl \
-    --api_key {your-api-key} \
-    --metrics correctness faithfulness
-```
-
-Metrics:
-- **Correctness** (0-2): Factual accuracy against ground truth
-- **Faithfulness** (0-2): Consistency with retrieved context
+**Evaluation Metrics:**
+- **Retrieval**: Recall@K, F1@K, MRR, NDCG
+- **Generation**: Correctness (0-2), Faithfulness (0-2)
 
 ## ⚙️ Configuration
 
@@ -307,16 +314,49 @@ Simply provide the correct `--api_key`, `--base_url`, and `--model_name` for you
 
 ### Path Configuration
 
-All paths use relative paths from project root (configured in `evaluation/components/config.py`).
+Paths are configured separately for each module:
+- **Leaderboard Evaluation**: `evaluation/components/config.py`
+- **Paper Experiments**: `experiments/components/config.py`
 
 ## 📈 Evaluation Results
 
-Results will be stored in:
-- **Retrieval Results**: `evaluation/retrieval_results/`
-- **Generation Results**: `evaluation/generation_results/`
-- **Evaluation Reports**: `evaluation/retrieval_evaluation/` and `evaluation/generation_evaluation/`
+**Leaderboard Evaluation** (`evaluation/`):
+- See [leaderboard/README.md](leaderboard/README.md) for result locations and formats
 
-## 🔬 Research Applications
+**Paper Experiments** (`experiments/`):
+- **Retrieval Results**: `experiments/retrieval_results/`
+- **Generation Results**: `experiments/generation_results/`
+
+## 🔬 Evaluation Modules
+
+ChronoPlay provides two evaluation modules for different purposes:
+
+### 📊 Leaderboard Evaluation (`evaluation/`)
+
+**Purpose**: Standard benchmark evaluation for comparing RAG systems
+
+**Use Case**: 
+- Submit results to the official leaderboard
+- Compare your system with others
+- Evaluate on the standardized leaderboard dataset
+
+**Dataset**: [HuggingFace leaderboard dataset](https://huggingface.co/datasets/leoner24/ChronoPlay-QA)
+
+**📖 Documentation**: See [leaderboard/README.md](leaderboard/README.md) for detailed instructions
+
+### 🔬 Paper Experiments (`experiments/`)
+
+**Purpose**: Reproduce and analyze dual-dynamic phenomena from the paper
+
+**Use Case**:
+- Reproduce paper experiments
+- Study temporal knowledge evolution
+- Analyze user interest drift
+- Investigate dual-dynamic challenges
+
+**Dataset**: Full temporal segments from cloud drive
+
+## 🎯 Research Applications
 
 ChronoPlay can be used to:
 
@@ -325,6 +365,20 @@ ChronoPlay can be used to:
 3. **Test Adaptation Strategies**: Evaluate how systems handle content updates
 4. **Assess Player-Centricity**: Measure alignment with real player concerns
 
+## 🏆 Submit to Leaderboard
+
+To submit your RAG system results to the ChronoPlay leaderboard:
+
+**👉 See [leaderboard/README.md](leaderboard/README.md) for complete submission guide**
+
+The submission guide includes:
+- How to run the evaluation pipeline
+- Required metrics and calculation methods
+- Submission file format and template
+- Pull request submission process
+
+View the current rankings: [ChronoPlay Leaderboard](https://hly1998.github.io/ChronoPlay/leaderboard/)
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -332,15 +386,23 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit Pull Requests for:
+- RAG system evaluation results (see [leaderboard/README.md](leaderboard/README.md))
 - Support for additional games
 - New evaluation metrics
 - Performance improvements
 - Bug fixes
 
-## 📧 Contact
+## 📚 Citation
 
-For questions or feedback, please open an issue on GitHub.
+If you use ChronoPlay in your research, please cite our paper:
 
----
+```bibtex
+@article{he2025chronoplay,
+  title={ChronoPlay: A Framework for Modeling Dual Dynamics and Authenticity in Game RAG Benchmarks},
+  author={He, Liyang and Zhang, Yuren and Zhu, Ziwei and Li, Zhenghui and Tong, Shiwei},
+  journal={arXiv preprint arXiv:2510.18455},
+  year={2025}
+}
+```
 
-**Note**: Replace `{your-api-key}` and `{your-base-url}` with your actual API credentials when running the scripts.
+

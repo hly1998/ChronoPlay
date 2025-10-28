@@ -18,19 +18,28 @@ from llama_index.core import (
     Settings
 )
 from llama_index.core.vector_stores.types import VectorStoreQuery
+from openai import OpenAI
 
-from .config import RetrievalConfig
+from .config import RAGConfig, RetrievalConfig
 from .embedding_service import create_embedding_service
 
 
 class VectorRetriever:
     """简化的向量检索器"""
 
-    def __init__(self, config: RetrievalConfig):
+    def __init__(self, config):
         self.config = config
         self.index = None
         self.retriever = None
 
+        # 支持两种配置类型
+        if isinstance(config, RetrievalConfig):
+            self._init_with_retrieval_config(config)
+        else:
+            self._init_with_rag_config(config)
+
+    def _init_with_retrieval_config(self, config: RetrievalConfig):
+        """使用RetrievalConfig初始化"""
         # 创建嵌入服务
         self.embedding_service = create_embedding_service(config)
 
@@ -39,6 +48,21 @@ class VectorRetriever:
             api_key=config.api_key,
             api_base=config.base_url,
             model=config.embedding_model
+        )
+
+    def _init_with_rag_config(self, config: RAGConfig):
+        """使用RAGConfig初始化（保持向后兼容）"""
+        # 配置嵌入模型
+        Settings.embed_model = OpenAIEmbedding(
+            api_key=config.api_key,
+            api_base=config.base_url,
+            model=config.embedding_model
+        )
+
+        # 用于批量embeddings的OpenAI客户端
+        self.openai_client = OpenAI(
+            api_key=config.api_key,
+            base_url=config.base_url
         )
 
     def build_index(self, documents: List[Document]) -> bool:
@@ -59,10 +83,9 @@ class VectorRetriever:
         """生成索引名称"""
         model_name = self.config.embedding_model.replace('-', '_').replace('/', '_')
 
-        # 基于游戏名生成索引
-        if self.config.game_name:
+        if self.config.target_segment_id:
             suffix = "_with_timeless" if self.config.include_timeless else ""
-            return f"{model_name}/{self.config.game_name}{suffix}"
+            return f"{model_name}/segment_{self.config.target_segment_id}{suffix}"
         return f"{model_name}/full_corpus"
 
     def _load_existing_index(self, index_path: Path) -> bool:

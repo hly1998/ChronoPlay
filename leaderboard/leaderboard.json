@@ -1,0 +1,1522 @@
+[
+    {
+        "system_name": "bm25+Claude-3.5-Sonnet",
+        "description": "Sparse retrieval using BM25 with Claude-3.5-Sonnet for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.113,
+                "faithfulness": 0.519
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.279,
+                "faithfulness": 0.547
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.274,
+                "faithfulness": 0.441
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.239,
+            "faithfulness": 0.498
+        }
+    },
+    {
+        "system_name": "bm25+Claude-3.7-Sonnet",
+        "description": "Sparse retrieval using BM25 with Claude-3.7-Sonnet for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.226,
+                "faithfulness": 0.67
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.227,
+                "faithfulness": 0.645
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.29,
+                "faithfulness": 0.575
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.252,
+            "faithfulness": 0.623
+        }
+    },
+    {
+        "system_name": "bm25+Claude-Sonnet-4",
+        "description": "Sparse retrieval using BM25 with Claude-Sonnet-4 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.226,
+                "faithfulness": 0.566
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.262,
+                "faithfulness": 0.552
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.312,
+                "faithfulness": 0.5
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.274,
+            "faithfulness": 0.534
+        }
+    },
+    {
+        "system_name": "bm25+Claude-Sonnet-4.5",
+        "description": "Sparse retrieval using BM25 with Claude-Sonnet-4.5 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.179,
+                "faithfulness": 0.651
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.297,
+                "faithfulness": 0.587
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.285,
+                "faithfulness": 0.516
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.265,
+            "faithfulness": 0.573
+        }
+    },
+    {
+        "system_name": "bm25+DeepSeek-V3.1",
+        "description": "Sparse retrieval using BM25 with DeepSeek-V3.1 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.236,
+                "faithfulness": 0.585
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.302,
+                "faithfulness": 0.68
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.312,
+                "faithfulness": 0.586
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.291,
+            "faithfulness": 0.621
+        }
+    },
+    {
+        "system_name": "bm25+DeepSeek-V3.2-Exp",
+        "description": "Sparse retrieval using BM25 with DeepSeek-V3.2-Exp for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.236,
+                "faithfulness": 0.632
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.285,
+                "faithfulness": 0.686
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.333,
+                "faithfulness": 0.597
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.293,
+            "faithfulness": 0.638
+        }
+    },
+    {
+        "system_name": "bm25+GLM-4.5",
+        "description": "Sparse retrieval using BM25 with GLM-4.5 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.217,
+                "faithfulness": 0.632
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.285,
+                "faithfulness": 0.581
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.36,
+                "faithfulness": 0.457
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.3,
+            "faithfulness": 0.543
+        }
+    },
+    {
+        "system_name": "bm25+GPT-3.5-Turbo",
+        "description": "Sparse retrieval using BM25 with GPT-3.5-Turbo for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.236,
+                "faithfulness": 0.358
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.256,
+                "faithfulness": 0.471
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.328,
+                "faithfulness": 0.333
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.28,
+            "faithfulness": 0.39
+        }
+    },
+    {
+        "system_name": "bm25+GPT-4.1",
+        "description": "Sparse retrieval using BM25 with GPT-4.1 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.274,
+                "faithfulness": 0.491
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.407,
+                "faithfulness": 0.39
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.511,
+                "faithfulness": 0.344
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.418,
+            "faithfulness": 0.394
+        }
+    },
+    {
+        "system_name": "bm25+GPT-4o",
+        "description": "Sparse retrieval using BM25 with GPT-4o for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.283,
+                "faithfulness": 0.519
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.314,
+                "faithfulness": 0.459
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.398,
+                "faithfulness": 0.398
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.341,
+            "faithfulness": 0.448
+        }
+    },
+    {
+        "system_name": "bm25+GPT-5-Chat",
+        "description": "Sparse retrieval using BM25 with GPT-5-Chat for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.292,
+                "faithfulness": 0.415
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.401,
+                "faithfulness": 0.372
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.511,
+                "faithfulness": 0.366
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.42,
+            "faithfulness": 0.379
+        }
+    },
+    {
+        "system_name": "bm25+Gemini-2.5-Flash",
+        "description": "Sparse retrieval using BM25 with Gemini-2.5-Flash for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.236,
+                "faithfulness": 0.726
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.273,
+                "faithfulness": 0.802
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.355,
+                "faithfulness": 0.715
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.297,
+            "faithfulness": 0.75
+        }
+    },
+    {
+        "system_name": "bm25+Gemini-2.5-Pro",
+        "description": "Sparse retrieval using BM25 with Gemini-2.5-Pro for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.198,
+                "faithfulness": 0.708
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.267,
+                "faithfulness": 0.767
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.355,
+                "faithfulness": 0.726
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.287,
+            "faithfulness": 0.737
+        }
+    },
+    {
+        "system_name": "bm25+Grok-3",
+        "description": "Sparse retrieval using BM25 with Grok-3 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.0,
+                "faithfulness": 0.0
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.0,
+                "faithfulness": 0.012
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.0,
+                "faithfulness": 0.0
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.0,
+            "faithfulness": 0.004
+        }
+    },
+    {
+        "system_name": "bm25+Kimi-K2",
+        "description": "Sparse retrieval using BM25 with Kimi-K2 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.264,
+                "faithfulness": 0.491
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.308,
+                "faithfulness": 0.459
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.349,
+                "faithfulness": 0.435
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.315,
+            "faithfulness": 0.457
+        }
+    },
+    {
+        "system_name": "bm25+Llama-4-Scout",
+        "description": "Sparse retrieval using BM25 with Llama-4-Scout for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.16,
+                "faithfulness": 0.33
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.198,
+                "faithfulness": 0.366
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.21,
+                "faithfulness": 0.312
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.194,
+            "faithfulness": 0.336
+        }
+    },
+    {
+        "system_name": "bm25+O1",
+        "description": "Sparse retrieval using BM25 with O1 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.34,
+                "faithfulness": 0.509
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.395,
+                "faithfulness": 0.442
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.452,
+                "faithfulness": 0.403
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.405,
+            "faithfulness": 0.442
+        }
+    },
+    {
+        "system_name": "bm25+O3",
+        "description": "Sparse retrieval using BM25 with O3 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.0,
+                "faithfulness": 0.0
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.0,
+                "faithfulness": 0.023
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.0,
+                "faithfulness": 0.011
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.0,
+            "faithfulness": 0.013
+        }
+    },
+    {
+        "system_name": "bm25+Qwen2.5-72B",
+        "description": "Sparse retrieval using BM25 with Qwen2.5-72B for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.132,
+                "faithfulness": 0.226
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.221,
+                "faithfulness": 0.32
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.28,
+                "faithfulness": 0.194
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.224,
+            "faithfulness": 0.248
+        }
+    },
+    {
+        "system_name": "bm25+Qwen3-Max",
+        "description": "Sparse retrieval using BM25 with Qwen3-Max for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.642,
+                "f1": 0.321,
+                "ndcg": 0.534,
+                "correctness": 0.189,
+                "faithfulness": 0.425
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.628,
+                "f1": 0.314,
+                "ndcg": 0.576,
+                "correctness": 0.291,
+                "faithfulness": 0.39
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.783,
+                "correctness": 0.392,
+                "faithfulness": 0.43
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.72,
+            "f1": 0.36,
+            "ndcg": 0.649,
+            "correctness": 0.308,
+            "faithfulness": 0.414
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Claude-3.5-Sonnet",
+        "description": "Dense retrieval using text-embedding-3-small with Claude-3.5-Sonnet for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.189,
+                "faithfulness": 0.481
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.355,
+                "faithfulness": 0.506
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.323,
+                "faithfulness": 0.457
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.304,
+            "faithfulness": 0.481
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Claude-3.7-Sonnet",
+        "description": "Dense retrieval using text-embedding-3-small with Claude-3.7-Sonnet for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.245,
+                "faithfulness": 0.66
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.285,
+                "faithfulness": 0.61
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.349,
+                "faithfulness": 0.559
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.302,
+            "faithfulness": 0.601
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Claude-Sonnet-4",
+        "description": "Dense retrieval using text-embedding-3-small with Claude-Sonnet-4 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.236,
+                "faithfulness": 0.632
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.355,
+                "faithfulness": 0.558
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.312,
+                "faithfulness": 0.505
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.31,
+            "faithfulness": 0.554
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Claude-Sonnet-4.5",
+        "description": "Dense retrieval using text-embedding-3-small with Claude-Sonnet-4.5 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.255,
+                "faithfulness": 0.632
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.378,
+                "faithfulness": 0.605
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.355,
+                "faithfulness": 0.532
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.341,
+            "faithfulness": 0.582
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+DeepSeek-V3.1",
+        "description": "Dense retrieval using text-embedding-3-small with DeepSeek-V3.1 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.17,
+                "faithfulness": 0.396
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.256,
+                "faithfulness": 0.442
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.398,
+                "faithfulness": 0.613
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.293,
+            "faithfulness": 0.5
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+DeepSeek-V3.2-Exp",
+        "description": "Dense retrieval using text-embedding-3-small with DeepSeek-V3.2-Exp for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.321,
+                "faithfulness": 0.613
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.36,
+                "faithfulness": 0.674
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.349,
+                "faithfulness": 0.602
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.347,
+            "faithfulness": 0.631
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+GLM-4.5",
+        "description": "Dense retrieval using text-embedding-3-small with GLM-4.5 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.245,
+                "faithfulness": 0.538
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.343,
+                "faithfulness": 0.581
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.392,
+                "faithfulness": 0.473
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.341,
+            "faithfulness": 0.528
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+GPT-3.5-Turbo",
+        "description": "Dense retrieval using text-embedding-3-small with GPT-3.5-Turbo for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.311,
+                "faithfulness": 0.415
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.378,
+                "faithfulness": 0.564
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.36,
+                "faithfulness": 0.392
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.356,
+            "faithfulness": 0.461
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+GPT-4.1",
+        "description": "Dense retrieval using text-embedding-3-small with GPT-4.1 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.302,
+                "faithfulness": 0.443
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.477,
+                "faithfulness": 0.448
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.495,
+                "faithfulness": 0.366
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.444,
+            "faithfulness": 0.414
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+GPT-4o",
+        "description": "Dense retrieval using text-embedding-3-small with GPT-4o for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.292,
+                "faithfulness": 0.5
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.39,
+                "faithfulness": 0.628
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.419,
+                "faithfulness": 0.419
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.379,
+            "faithfulness": 0.515
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+GPT-5-Chat",
+        "description": "Dense retrieval using text-embedding-3-small with GPT-5-Chat for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.33,
+                "faithfulness": 0.472
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.459,
+                "faithfulness": 0.529
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.468,
+                "faithfulness": 0.339
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.433,
+            "faithfulness": 0.44
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Gemini-2.5-Flash",
+        "description": "Dense retrieval using text-embedding-3-small with Gemini-2.5-Flash for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.283,
+                "faithfulness": 0.802
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.366,
+                "faithfulness": 0.797
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.419,
+                "faithfulness": 0.769
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.369,
+            "faithfulness": 0.787
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Gemini-2.5-Pro",
+        "description": "Dense retrieval using text-embedding-3-small with Gemini-2.5-Pro for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.311,
+                "faithfulness": 0.84
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.349,
+                "faithfulness": 0.779
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.403,
+                "faithfulness": 0.774
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.362,
+            "faithfulness": 0.791
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Grok-3",
+        "description": "Dense retrieval using text-embedding-3-small with Grok-3 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.189,
+                "faithfulness": 0.396
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.314,
+                "faithfulness": 0.529
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.323,
+                "faithfulness": 0.376
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.289,
+            "faithfulness": 0.438
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Kimi-K2",
+        "description": "Dense retrieval using text-embedding-3-small with Kimi-K2 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.34,
+                "faithfulness": 0.396
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.413,
+                "faithfulness": 0.494
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.409,
+                "faithfulness": 0.339
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.394,
+            "faithfulness": 0.409
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Llama-4-Scout",
+        "description": "Dense retrieval using text-embedding-3-small with Llama-4-Scout for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.16,
+                "faithfulness": 0.368
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.279,
+                "faithfulness": 0.43
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.242,
+                "faithfulness": 0.317
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.237,
+            "faithfulness": 0.371
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+O1",
+        "description": "Dense retrieval using text-embedding-3-small with O1 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.415,
+                "faithfulness": 0.491
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.512,
+                "faithfulness": 0.506
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.538,
+                "faithfulness": 0.376
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.5,
+            "faithfulness": 0.45
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+O3",
+        "description": "Dense retrieval using text-embedding-3-small with O3 for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.368,
+                "faithfulness": 0.264
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.57,
+                "faithfulness": 0.32
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.543,
+                "faithfulness": 0.237
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.513,
+            "faithfulness": 0.274
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Qwen2.5-72B",
+        "description": "Dense retrieval using text-embedding-3-small with Qwen2.5-72B for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.208,
+                "faithfulness": 0.198
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.25,
+                "faithfulness": 0.32
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.323,
+                "faithfulness": 0.237
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.269,
+            "faithfulness": 0.259
+        }
+    },
+    {
+        "system_name": "text-embedding-3-small+Qwen3-Max",
+        "description": "Dense retrieval using text-embedding-3-small with Qwen3-Max for generation",
+        "games": {
+            "dune": {
+                "topk": 3,
+                "recall": 0.849,
+                "f1": 0.425,
+                "ndcg": 0.774,
+                "correctness": 0.226,
+                "faithfulness": 0.34
+            },
+            "dying_light_2": {
+                "topk": 3,
+                "recall": 0.872,
+                "f1": 0.436,
+                "ndcg": 0.79,
+                "correctness": 0.413,
+                "faithfulness": 0.488
+            },
+            "pubg_mobile": {
+                "topk": 3,
+                "recall": 0.957,
+                "f1": 0.478,
+                "ndcg": 0.901,
+                "correctness": 0.387,
+                "faithfulness": 0.398
+            }
+        },
+        "average": {
+            "topk": 3,
+            "recall": 0.901,
+            "f1": 0.45,
+            "ndcg": 0.831,
+            "correctness": 0.36,
+            "faithfulness": 0.418
+        }
+    }
+]

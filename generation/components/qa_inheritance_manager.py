@@ -14,7 +14,8 @@ class QAInheritanceManager:
         self.base_path = base_path
         self.game_name = game_name
         self.corpus_path = base_path / "data" / game_name / "corpus"
-        self.qa_data_path = base_path / "generation" / "data" / game_name
+        # 修改为与generation.py中qa_output_dir一致的路径
+        self.qa_data_path = base_path / "data" / game_name / "segments"
         self.openai_client = openai_client
         # 缓存片段实体，避免重复抽取
         self._segment_entities_cache = {}

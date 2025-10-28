@@ -4,9 +4,8 @@
 """
 
 import json
-import asyncio
 from typing import List
-from openai import OpenAI, AsyncOpenAI
+from openai import OpenAI
 
 
 class GameCorrectnessEvaluator:
@@ -20,7 +19,6 @@ class GameCorrectnessEvaluator:
         self.temperature = temperature
 
         self.client = OpenAI(api_key=api_key, base_url=base_url)
-        self.async_client = AsyncOpenAI(api_key=api_key, base_url=base_url)
 
         # 正确性评估prompt
         self.evaluation_prompt = """You are an extremely strict game knowledge correctness evaluator. Your task is to evaluate the accuracy of a predicted answer against the ground truth answer for a game-related question with MAXIMUM RIGOR.
@@ -185,68 +183,3 @@ Apply MAXIMUM STRICTNESS in evaluating faithfulness. Score 2 should be EXTREMELY
         faithfulness = result_json.get('faithfulness', 0)
 
         return float(faithfulness) if faithfulness in [0, 1, 2] else 0.0
-
-    async def evaluate_single_async(self, question: str, ground_truth: str, prediction: str) -> float:
-        """异步评估单个问答对的正确性"""
-        full_prompt = self.evaluation_prompt.format(
-            question=question,
-            answers=ground_truth,
-            prediction=prediction
-        )
-
-        max_retries = 3
-        for attempt in range(max_retries):
-            try:
-                response = await self.async_client.chat.completions.create(
-                    model=self.model,
-                    messages=[
-                        {"role": "system", "content": "You are a professional game knowledge correctness evaluator. Always respond with valid JSON format."},
-                        {"role": "user", "content": full_prompt}
-                    ],
-                    temperature=self.temperature,
-                    response_format={"type": "json_object"}
-                )
-
-                result_text = response.choices[0].message.content.strip()
-                result_json = json.loads(result_text)
-                accuracy = result_json.get('accuracy', 0)
-
-                return float(accuracy) if accuracy in [0, 1, 2] else 0.0
-            except Exception as e:
-                if attempt == max_retries - 1:
-                    print(f"评估失败: {str(e)}")
-                    return 0.0
-                await asyncio.sleep(1 * (attempt + 1))
-
-    async def evaluate_faithfulness_async(self, question: str, contexts: List[str], prediction: str) -> float:
-        """异步评估单个问答对的faithfulness"""
-        contexts_str = "\n\n".join([f"Context {i+1}:\n{ctx}" for i, ctx in enumerate(contexts)])
-        full_prompt = self.faithfulness_prompt.format(
-            question=question,
-            contexts=contexts_str,
-            prediction=prediction
-        )
-
-        max_retries = 3
-        for attempt in range(max_retries):
-            try:
-                response = await self.async_client.chat.completions.create(
-                    model=self.model,
-                    messages=[
-                        {"role": "system", "content": "You are a professional faithfulness evaluator for game knowledge QA systems. Always respond with valid JSON format."},
-                        {"role": "user", "content": full_prompt}
-                    ],
-                    temperature=self.temperature,
-                    response_format={"type": "json_object"}
-                )
-
-                result_text = response.choices[0].message.content.strip()
-                result_json = json.loads(result_text)
-                faithfulness = result_json.get('faithfulness', 0)
-
-                return float(faithfulness) if faithfulness in [0, 1, 2] else 0.0
-            except Exception as e:
-                if attempt == max_retries - 1:
-                    print(f"Faithfulness评估失败: {str(e)}")
-                    return 0.0
-                await asyncio.sleep(1 * (attempt + 1))

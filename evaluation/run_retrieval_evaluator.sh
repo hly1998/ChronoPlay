@@ -1,1 +1,1 @@
-python retrieval_evaluator.py --segment_id 1 --game dune
+python retrieval_evaluator.py --file evaluation/retrieval_results/retrieval_bm25_k3.jsonl

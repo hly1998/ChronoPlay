@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronoPlay RAG Leaderboard</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 3em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .header-section {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            height: 80px;
+            width: auto;
+        }
+
+        .header-section h1 {
+            font-size: 3em;
+            margin: 0;
+            color: #333;
+        }
+
+        .header-section h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .header-section p {
+            line-height: 1.8;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .authors-section {
+            margin-top: 20px;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .authors-list {
+            font-size: 1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .author-super {
+            font-size: 0.75em;
+            vertical-align: super;
+            color: #006EFF;
+        }
+
+        .corresponding {
+            color: #d32f2f;
+        }
+
+        .equal-contrib {
+            color: #006EFF;
+        }
+
+        .affiliations {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .affiliation {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .affiliation-number {
+            font-size: 0.85em;
+            vertical-align: super;
+            color: #006EFF;
+            font-weight: 600;
+        }
+
+        .links-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .resource-link {
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .github-link {
+            background-color: #006EFF;
+            /* Tencent Blue */
+        }
+
+        .github-link:hover {
+            background-color: #0056cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 110, 255, 0.3);
+        }
+
+        .arxiv-link {
+            background-color: #b31b1b;
+            /* arXiv red */
+        }
+
+        .arxiv-link:hover {
+            background-color: #8b1515;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(179, 27, 27, 0.3);
+        }
+
+        .huggingface-link {
+            background-color: #FFD21E;
+            /* Hugging Face yellow */
+            color: #333;
+        }
+
+        .huggingface-link:hover {
+            background-color: #FFC107;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 210, 30, 0.3);
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: #006EFF;
+        }
+
+        .tab.active {
+            color: #006EFF;
+            border-bottom: 3px solid #006EFF;
+            margin-bottom: -2px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .leaderboard-table {
+            width: 100% !important;
+            font-size: 14px;
+        }
+
+        .leaderboard-table thead th {
+            background-color: #006EFF;
+            color: white;
+            font-weight: 600;
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        .leaderboard-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .leaderboard-table tbody td {
+            padding: 10px 8px;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            color: white;
+        }
+
+        .rank-1 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .rank-2 {
+            background: linear-gradient(135deg, #C0C0C0, #808080);
+        }
+
+        .rank-3 {
+            background: linear-gradient(135deg, #CD7F32, #8B4513);
+        }
+
+        .rank-other {
+            background-color: #999;
+        }
+
+        .system-info {
+            line-height: 1.6;
+        }
+
+        .system-name {
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .system-name:hover {
+            color: #006EFF;
+        }
+
+        .expand-icon {
+            font-size: 0.8em;
+            color: #006EFF;
+            transition: transform 0.3s;
+        }
+
+        .expand-icon.expanded {
+            transform: rotate(90deg);
+        }
+
+        .system-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 8px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 3px solid #006EFF;
+            border-radius: 4px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .system-description.show {
+            display: block;
+        }
+
+        .metric-score {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .total-score {
+            font-weight: 700;
+            color: #006EFF;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        a {
+            color: #006EFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .game-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .badge-dune {
+            background-color: #e6f2ff;
+            color: #006EFF;
+        }
+
+        .badge-dying-light {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+
+        .badge-pubg {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .metrics-legend {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #006EFF;
+        }
+
+        .metrics-legend h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .metrics-legend ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .metrics-legend li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .metrics-legend strong {
+            color: #006EFF;
+        }
+
+        .submit-info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .submit-info h3 {
+            margin-top: 0;
+            color: #2e7d32;
+        }
+
+        .submit-info code {
+            background-color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .submit-info pre {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .logo-container img {
+                height: 50px;
+            }
+
+            .title-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .links-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .resource-link {
+                width: 100%;
+                text-align: center;
+            }
+
+            .tab {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-section">
+        <div class="title-container">
+            <div class="logo-container">
+                <img src="logo.png" alt="ChronoPlay Logo">
+            </div>
+            <h1>ChronoPlay RAG Leaderboard</h1>
+        </div>
+        <p class="subtitle" style="color: #006EFF;">A Framework for Modeling Dual Dynamics and Authenticity in Game RAG
+            Benchmarks</p>
+
+        <div class="authors-section">
+            <div class="authors-list">
+                <span class="author-name">Liyang He</span><span class="author-super">1</span>,
+                <span class="author-name">Yuren Zhang</span><span class="author-super">1</span>,
+                <span class="author-name">Ziwei Zhu</span><span class="author-super">2</span>,
+                <span class="author-name">Zhenghui Li</span><span class="author-super">3</span>,
+                <span class="author-name">Shiwei Tong</span><span class="author-super corresponding">1,†</span>
+            </div>
+            <div class="affiliations">
+                <span class="affiliation"><span class="affiliation-number">1</span>Tencent</span>
+                <span class="affiliation"><span class="affiliation-number">2</span>The Chinese University of Hong
+                    Kong</span>
+                <span class="affiliation"><span class="affiliation-number">3</span>Independent Researcher</span>
+            </div>
+            <div style="font-size: 0.85em; color: #999; margin-top: 10px;">
+                <span class="corresponding">†</span> Corresponding author: shiweitong@tencent.com
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; margin-bottom: 20px;">
+            <p>
+                <strong>ChronoPlay</strong> is a novel framework for automated and continuous generation of game
+                Retrieval Augmented Generation benchmarks. This leaderboard evaluates RAG systems across three popular
+                games:
+                <strong>Dune: Awakening</strong>, <strong>Dying Light 2</strong>, and <strong>PUBG Mobile</strong>.
+            </p>
+            <p
+                style="background-color: #f0f7ff; padding: 15px; border-left: 4px solid #006EFF; border-radius: 5px; margin-top: 15px;">
+                <strong>📊 Evaluation Methodology:</strong> While the original paper evaluates models across different
+                temporal
+                segments to capture the dual dynamics of game evolution, this leaderboard presents a <strong>holistic
+                    evaluation</strong>
+                for each game. Each system is assessed on the complete game dataset to provide a comprehensive measure
+                of
+                overall model performance, making it easier to compare different RAG approaches at a glance.
+            </p>
+        </div>
+
+        <div class="links-container">
+            <a href="https://github.com/hly1998/ChronoPlay" target="_blank" class="resource-link github-link">
+                <img src="github-mark.svg" alt="GitHub" height="24"
+                    style="vertical-align: middle; margin-right: 8px; filter: brightness(0) invert(1);">
+                GitHub
+            </a>
+            <a href="https://arxiv.org/abs/2510.18455" target="_blank" class="resource-link arxiv-link">
+                <img src="arxiv-logo.svg" alt="arXiv" height="24"
+                    style="vertical-align: middle; margin-right: 8px; filter: brightness(0) invert(1);">
+                Paper
+            </a>
+            <a href="https://huggingface.co/datasets/leoner24/ChronoPlay-QA" target="_blank"
+                class="resource-link huggingface-link">
+                <img src="hf-logo.svg" alt="Hugging Face" height="24"
+                    style="vertical-align: middle; margin-right: 8px;">
+                Dataset
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="loading" class="loading">
+            <p>Loading...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <p>Error loading data. Please try again later.</p>
+        </div>
+
+        <div id="content" style="display: none;">
+            <div class="tabs">
+                <button class="tab active" data-game="overall">🏆 Overall</button>
+                <button class="tab" data-game="dune">Dune: Awakening</button>
+                <button class="tab" data-game="dying_light_2">Dying Light 2</button>
+                <button class="tab" data-game="pubg_mobile">PUBG Mobile</button>
+            </div>
+
+            <div id="overall-content" class="tab-content active">
+                <h2 style="color: #006EFF; margin-bottom: 15px;">Overall Rankings (Average Across All Games)</h2>
+                <table id="overall-table" class="leaderboard-table display">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>System</th>
+                            <th>Top-K</th>
+                            <th>R</th>
+                            <th>G</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="dune-content" class="tab-content">
+                <h2 style="color: #006EFF; margin-bottom: 15px;">Dune: Awakening Rankings</h2>
+                <table id="dune-table" class="leaderboard-table display">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>System</th>
+                            <th>Top-K</th>
+                            <th>R</th>
+                            <th>G</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="dying_light_2-content" class="tab-content">
+                <h2 style="color: #006EFF; margin-bottom: 15px;">Dying Light 2 Rankings</h2>
+                <table id="dying_light_2-table" class="leaderboard-table display">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>System</th>
+                            <th>Top-K</th>
+                            <th>R</th>
+                            <th>G</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="pubg_mobile-content" class="tab-content">
+                <h2 style="color: #006EFF; margin-bottom: 15px;">PUBG Mobile Rankings</h2>
+                <table id="pubg_mobile-table" class="leaderboard-table display">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>System</th>
+                            <th>Top-K</th>
+                            <th>R</th>
+                            <th>G</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="metrics-legend">
+                <h3>📊 Evaluation Metrics</h3>
+                <p><strong>Base Metrics:</strong></p>
+                <ul>
+                    <li><strong>Recall:</strong> Proportion of relevant documents found in top-k retrieval results</li>
+                    <li><strong>F1:</strong> Harmonic mean of precision and recall at top-k</li>
+                    <li><strong>NDCG:</strong> Normalized Discounted Cumulative Gain, considers ranking quality</li>
+                    <li><strong>Correctness:</strong> Accuracy of generated answers</li>
+                    <li><strong>Faithfulness:</strong> Consistency of generated answers with retrieved documents</li>
+                </ul>
+                <p><strong>Computed Scores:</strong></p>
+                <ul>
+                    <li><strong>R (Retrieval Score):</strong> Average of Recall, F1, and NDCG
+                        <br><code>R = (Recall + F1 + NDCG) / 3</code>
+                    </li>
+                    <li><strong>G (Generation Score):</strong> Weighted average of Correctness (75%) and Faithfulness
+                        (25%)
+                        <br><code>G = Correctness × 0.75 + Faithfulness × 0.25</code>
+                    </li>
+                    <li><strong>Total Score:</strong> Weighted average of Retrieval (25%) and Generation (75%)
+                        <br><code>Total = R × 0.25 + G × 0.75</code>
+                    </li>
+                </ul>
+                <p><strong>Note:</strong> All scores are displayed as percentages (0-100). The Top-K value indicates the
+                    number of documents retrieved for each query.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-info">
+        <h3>📝 How to Submit Your Results?</h3>
+        <ol>
+            <li>Fork this repository</li>
+            <li>Create a new JSON file in the <code>submissions/</code> directory (e.g., <code>my_system.json</code>)
+            </li>
+            <li>Fill in your results in the following format:
+                <pre><code>{
+  "system_name": "My RAG System v1.0",
+  "description": "Dense retrieval with BM25 reranking and GPT-4 for generation",
+  "games": {
+    "dune": {
+      "topk": 3,
+      "recall": 0.85,
+      "f1": 0.78,
+      "ndcg": 0.82,
+      "correctness": 0.88,
+      "faithfulness": 0.91
+    },
+    "dying_light_2": {
+      "topk": 3,
+      "recall": 0.83,
+      "f1": 0.76,
+      "ndcg": 0.80,
+      "correctness": 0.86,
+      "faithfulness": 0.89
+    },
+    "pubg_mobile": {
+      "topk": 3,
+      "recall": 0.81,
+      "f1": 0.74,
+      "ndcg": 0.78,
+      "correctness": 0.84,
+      "faithfulness": 0.87
+    }
+  }
+}</code></pre>
+            </li>
+            <li>Submit a Pull Request</li>
+            <li>After the PR is merged, the leaderboard will be automatically updated</li>
+        </ol>
+        <p><strong>Note:</strong> All metric scores (recall, f1, ndcg, correctness, faithfulness) should be decimals
+            between 0-1.
+            The scores R, G, and Total Score will be calculated automatically by the frontend. You must provide results
+            for all three games.</p>
+    </div>
+
+    <div class="container" style="margin-top: 30px; background-color: #f9f9f9; border-left: 4px solid #006EFF;">
+        <h3 style="color: #333; margin-top: 0;">📚 Citation</h3>
+        <p>If you use this leaderboard or the ChronoPlay benchmark in your research, please cite our paper:</p>
+        <pre
+            style="background-color: #fff; padding: 20px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; font-size: 0.9em; line-height: 1.6;"><code>@article{he2025chronoplay,
+  title={ChronoPlay: A Framework for Modeling Dual Dynamics and Authenticity in Game RAG Benchmarks},
+  author={He, Liyang and Zhang, Yuren and Zhu, Ziwei and Li, Zhenghui and Tong, Shiwei},
+  journal={arXiv preprint arXiv:2510.18455},
+  year={2025}
+}</code></pre>
+        <p style="margin-bottom: 0;">
+            <strong>Resources:</strong>
+            <a href="https://arxiv.org/abs/2510.18455" target="_blank" style="margin-left: 10px;">Paper</a> |
+            <a href="https://github.com/hly1998/ChronoPlay" target="_blank" style="margin-left: 10px;">Code</a> |
+            <a href="https://huggingface.co/datasets/leoner24/ChronoPlay-QA" target="_blank"
+                style="margin-left: 10px;">Dataset</a>
+        </p>
+    </div>
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const dataUrl = 'leaderboard.json';
+            let dataTables = {};
+
+            // Tab switching
+            $('.tab').on('click', function () {
+                const game = $(this).data('game');
+
+                $('.tab').removeClass('active');
+                $(this).addClass('active');
+
+                $('.tab-content').removeClass('active');
+                $(`#${game}-content`).addClass('active');
+            });
+
+            // Helper function to create system info HTML
+            function createSystemInfo(row, uniqueId) {
+                return `
+                    <div class="system-name" data-id="${uniqueId}">
+                        <span class="expand-icon" id="icon-${uniqueId}">▶</span>
+                        <span>${row.system_name}</span>
+                    </div>
+                    ${row.description ? `<div class="system-description" id="desc-${uniqueId}">${row.description}</div>` : ''}
+                `;
+            }
+
+            // Helper function to create rank badge
+            function createRankBadge(rank) {
+                let rankClass = 'rank-other';
+                if (rank === 1) rankClass = 'rank-1';
+                else if (rank === 2) rankClass = 'rank-2';
+                else if (rank === 3) rankClass = 'rank-3';
+                return `<span class="rank-badge ${rankClass}">${rank}</span>`;
+            }
+
+            // Helper function to calculate scores
+            function calculateScores(metrics) {
+                // R (Retrieval Score) = (recall + f1 + ndcg) / 3
+                const R = (metrics.recall + metrics.f1 + metrics.ndcg) / 3;
+
+                // G (Generation Score) = correctness * 0.75 + faithfulness * 0.25
+                const G = metrics.correctness * 0.75 + metrics.faithfulness * 0.25;
+
+                // Total Score = R * 0.25 + G * 0.75
+                const totalScore = R * 0.25 + G * 0.75;
+
+                return {
+                    R: R * 100,
+                    G: G * 100,
+                    totalScore: totalScore * 100
+                };
+            }
+
+            // Helper function to populate table
+            function populateTable(tableId, data, gameKey) {
+                const tableBody = $(`#${tableId} tbody`);
+                tableBody.empty();
+
+                // Calculate scores for sorting
+                const dataWithScores = data.map(row => {
+                    const metrics = gameKey === 'average' ? row.average : row.games[gameKey];
+                    const scores = calculateScores(metrics);
+                    return {
+                        ...row,
+                        calculatedScores: scores
+                    };
+                });
+
+                // Sort by total score
+                const sortedData = dataWithScores.sort((a, b) => {
+                    return b.calculatedScores.totalScore - a.calculatedScores.totalScore;
+                });
+
+                sortedData.forEach((row, index) => {
+                    const rank = index + 1;
+                    const metrics = gameKey === 'average' ? row.average : row.games[gameKey];
+                    const scores = row.calculatedScores;
+                    const uniqueId = `${gameKey}-${index}`;
+
+                    tableBody.append(`
+                        <tr>
+                            <td style="text-align: center;">${createRankBadge(rank)}</td>
+                            <td class="system-info">${createSystemInfo(row, uniqueId)}</td>
+                            <td class="metric-score" style="text-align: center;">${metrics.topk}</td>
+                            <td class="metric-score">${scores.R.toFixed(2)}%</td>
+                            <td class="metric-score">${scores.G.toFixed(2)}%</td>
+                            <td class="total-score">${scores.totalScore.toFixed(2)}</td>
+                        </tr>
+                    `);
+                });
+            }
+
+            // Initialize DataTables
+            function initDataTable(tableId) {
+                if (dataTables[tableId]) {
+                    dataTables[tableId].destroy();
+                }
+
+                dataTables[tableId] = $(`#${tableId}`).DataTable({
+                    "order": [[5, "desc"]], // Sort by total score (column index 5)
+                    "pageLength": 25,
+                    "language": {
+                        "search": "Search:",
+                        "lengthMenu": "Show _MENU_ entries",
+                        "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                        "infoEmpty": "Showing 0 to 0 of 0 entries",
+                        "infoFiltered": "(filtered from _MAX_ total entries)",
+                        "paginate": {
+                            "first": "First",
+                            "last": "Last",
+                            "next": "Next",
+                            "previous": "Previous"
+                        },
+                        "zeroRecords": "No matching records found",
+                        "emptyTable": "No data available in table"
+                    }
+                });
+            }
+
+            // Load data
+            fetch(dataUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    $('#loading').hide();
+
+                    if (data.length === 0) {
+                        $('#error').html('<p>No data available. Be the first to submit!</p>').show();
+                        return;
+                    }
+
+                    // Populate all tables
+                    populateTable('overall-table', data, 'average');
+                    populateTable('dune-table', data, 'dune');
+                    populateTable('dying_light_2-table', data, 'dying_light_2');
+                    populateTable('pubg_mobile-table', data, 'pubg_mobile');
+
+                    // Initialize DataTables
+                    initDataTable('overall-table');
+                    initDataTable('dune-table');
+                    initDataTable('dying_light_2-table');
+                    initDataTable('pubg_mobile-table');
+
+                    // Add event listener for system name clicks (event delegation)
+                    $(document).on('click', '.system-name', function () {
+                        const id = $(this).data('id');
+                        const desc = $('#desc-' + id);
+                        const icon = $('#icon-' + id);
+                        if (desc.length) {
+                            desc.toggleClass('show');
+                            icon.toggleClass('expanded');
+                        }
+                    });
+
+                    $('#content').show();
+                })
+                .catch(error => {
+                    console.error('Error loading leaderboard data:', error);
+                    $('#loading').hide();
+                    $('#error').show();
+                });
+        });
+    </script>
+</body>
+
+</html>

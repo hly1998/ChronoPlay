@@ -1,0 +1,30 @@
+{
+    "system_name": "Example RAG System v3.0",
+    "description": "Hybrid retrieval combining BM25 and dense embeddings with Claude-3 for generation",
+    "games": {
+        "dune": {
+            "topk": 3,
+            "recall": 0.82,
+            "f1": 0.76,
+            "ndcg": 0.79,
+            "correctness": 0.85,
+            "faithfulness": 0.88
+        },
+        "dying_light_2": {
+            "topk": 3,
+            "recall": 0.80,
+            "f1": 0.74,
+            "ndcg": 0.77,
+            "correctness": 0.83,
+            "faithfulness": 0.86
+        },
+        "pubg_mobile": {
+            "topk": 3,
+            "recall": 0.78,
+            "f1": 0.72,
+            "ndcg": 0.75,
+            "correctness": 0.81,
+            "faithfulness": 0.84
+        }
+    }
+}

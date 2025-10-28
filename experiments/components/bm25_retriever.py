@@ -25,7 +25,7 @@ class BM25Retriever:
         初始化BM25检索器
 
         Args:
-            config: RetrievalConfig
+            config: RAGConfig或RetrievalConfig
             k1: BM25参数k1，控制词频饱和度
             b: BM25参数b，控制文档长度归一化程度
         """
@@ -107,10 +107,9 @@ class BM25Retriever:
 
     def _get_index_name(self) -> str:
         """生成索引名称"""
-        # 基于游戏名生成索引
-        if self.config.game_name:
+        if self.config.target_segment_id:
             suffix = "_with_timeless" if self.config.include_timeless else ""
-            return f"bm25/{self.config.game_name}{suffix}"
+            return f"bm25/segment_{self.config.target_segment_id}{suffix}"
         return "bm25/full_corpus"
 
     def _load_existing_index(self, index_path: Path) -> bool:

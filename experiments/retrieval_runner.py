@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-简化版检索运行器
-针对整个游戏进行检索评估
+独立检索运行器
+只负责检索和索引构建，输出检索结果文件
 """
 
 import argparse
 from pathlib import Path
 
-from components import RetrievalConfig, RetrievalPipeline, CSVDataLoader
+from components import RetrievalConfig, RetrievalPipeline
 
 
 def main():
     """检索主函数"""
-    parser = argparse.ArgumentParser(description='多游戏混合检索运行器')
+    parser = argparse.ArgumentParser(description='独立检索运行器')
 
     # 基础参数
-    parser.add_argument('--csv_path', default='../data/data.csv', help='CSV数据文件路径')
-    parser.add_argument('--corpus_dir', default='../data', help='语料库目录路径')
+    parser.add_argument('--game', default='dyinglight2', help='游戏名称')
+    parser.add_argument('--segment_id', type=int, required=True, help='分段ID')
     parser.add_argument('--output_file', help='输出文件路径 (可选，会自动生成)')
 
     # 检索配置
@@ -25,7 +25,7 @@ def main():
     parser.add_argument('--api_key', default='{your-api-key}')
     parser.add_argument('--base_url', default='{your-base-url}')
     parser.add_argument('--embedding_model', default='text-embedding-3-small')
-    parser.add_argument('--top_k', type=int, default=3)
+    parser.add_argument('--top_k', type=int, default=5)
 
     # BM25专用参数
     parser.add_argument('--bm25_k1', type=float, default=1.2, help='BM25参数k1 (词频饱和度)')
@@ -40,9 +40,8 @@ def main():
 
     # 创建检索配置
     config = RetrievalConfig(
-        game_name='',  # 不再需要单个游戏名
-        csv_data_path=args.csv_path,
-        corpus_dir=args.corpus_dir,
+        game_name=args.game,
+        target_segment_id=args.segment_id,
         retrieval_method=args.retrieval_method,
         api_key=args.api_key,
         base_url=args.base_url,
@@ -55,27 +54,26 @@ def main():
         verbose=args.verbose
     )
 
-    # 加载CSV数据
-    data_loader = CSVDataLoader(args.csv_path)
-    all_data = data_loader.load_all_data()
+    print("🔍 开始检索任务")
+    print(f"   游戏: {args.game} | 分段: {args.segment_id}")
+    if args.retrieval_method == 'vector':
+        print(f"   方法: Vector | 模型: {args.embedding_model} | Top-K: {args.top_k}")
+    elif args.retrieval_method == 'bm25':
+        print(f"   方法: BM25 | k1={args.bm25_k1}, b={args.bm25_b} | Top-K: {args.top_k}")
 
-    if not all_data:
-        print("❌ 未找到数据")
-        return
-
-    # 获取所有游戏名称
-    game_names = data_loader.get_available_games()
-
-    print(f"[检索] 数据量: {len(all_data)}, 游戏: {', '.join(game_names)}, 方法: {args.retrieval_method}, Top-K: {args.top_k}")
-
-    # 转换为QA pairs格式
-    qa_pairs = data_loader.convert_to_qa_pairs(all_data)
-
-    # 初始化检索pipeline（为所有游戏）
+    # 初始化检索pipeline
     pipeline = RetrievalPipeline(config)
-    if not pipeline.initialize_for_games(game_names):
+    if not pipeline.initialize():
         print("❌ 检索初始化失败")
         return
+
+    # 加载QA数据
+    qa_pairs = pipeline.load_qa_pairs(args.segment_id)
+    if not qa_pairs:
+        print("❌ 未找到QA数据")
+        return
+
+    print(f"📊 加载了 {len(qa_pairs)} 个QA对")
 
     # 确定输出文件
     if args.output_file:
@@ -88,45 +86,28 @@ def main():
             model_name = args.embedding_model.replace('-', '_').replace('/', '_')
             method_name = model_name
 
-        filename = f"retrieval_{method_name}_k{args.top_k}.jsonl"
+        filename = f"retrieval_{args.game}_segment_{args.segment_id}_{method_name}_k{args.top_k}.jsonl"
 
         output_dir = Path(config.output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
         output_file = output_dir / filename
 
-    # 删除旧的输出文件（如果存在）
-    if output_file.exists():
-        output_file.unlink()
+    print(f"💾 输出文件: {output_file}")
 
     # 执行检索
     results = pipeline.batch_retrieve_qa_pairs(qa_pairs, str(output_file))
 
+    print("✅ 检索完成!")
+    print(f"📊 处理了 {len(results)} 个问题")
+    print(f"📄 检索结果保存至: {output_file}")
+
     # 输出统计信息
     success_count = len([r for r in results if 'error' not in r])
     error_count = len(results) - success_count
-
-    # 按游戏统计
-    game_stats = {}
-    for r in results:
-        game = r.get('game_name', 'unknown')
-        if game not in game_stats:
-            game_stats[game] = {'success': 0, 'error': 0}
-        if 'error' in r:
-            game_stats[game]['error'] += 1
-        else:
-            game_stats[game]['success'] += 1
+    print(f"📈 成功: {success_count}, 失败: {error_count}")
 
     if error_count > 0:
-        print(f"✓ 检索完成: {success_count} 成功, {error_count} 失败")
-    else:
-        print(f"✓ 检索完成: {success_count}/{len(results)}")
-
-    # 显示每个游戏的统计
-    for game, stats in sorted(game_stats.items()):
-        total = stats['success'] + stats['error']
-        print(f"  {game}: {stats['success']}/{total}")
-
-    print(f"  结果: {output_file}")
+        print("⚠️ 部分检索失败，请检查日志")
 
 
 if __name__ == '__main__':

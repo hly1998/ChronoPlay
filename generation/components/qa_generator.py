@@ -281,6 +281,9 @@ class QAGenerator:
 
             # 添加模板信息和角色信息，并确保实体信息正确提取
             for qa in qa_list:
+                # 移除不需要保存的思考过程字段
+                qa.pop('###THOUGHT_PROCESS###', None)
+
                 # 如果QA对中没有实体信息，从可用实体中提取相关的
                 if 'entities' not in qa or not qa['entities']:
                     qa['entities'] = self._extract_relevant_entities(qa, all_entities)
