@@ -4,7 +4,7 @@ An interactive leaderboard for evaluating RAG systems on the ChronoPlay benchmar
 
 ## 📊 View the Leaderboard
 
-Visit: [https://hly1998.github.io/ChronoPlay/leaderboard/](https://hly1998.github.io/ChronoPlay/leaderboard/)
+Visit: [https://hly1998.github.io/ChronoPlay/leaderboard/](https://hly1998.github.io/ChronoPlay/)
 
 ## 🚀 Quick Submit
 
