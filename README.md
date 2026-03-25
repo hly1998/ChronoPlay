@@ -9,11 +9,11 @@
 
 </div>
 
-This repository contains the implementation and data for **ChronoPlay**, a novel framework for automated and continuous generation of game RAG benchmarks.
+This repository contains the implementation and data for **ChronoPlay**, a novel framework for automated and continuous generation of game RAG benchmarks. **Accepted to the International Conference on Learning Representations (ICLR) 2026.**
 
 **Resources:**
 
-- **Paper**: [ChronoPlay: A Framework for Modeling Dual Dynamics and Authenticity in Game RAG Benchmarks](https://arxiv.org/pdf/2510.18455)
+- **Paper**: [ChronoPlay: A Framework for Modeling Dual Dynamics and Authenticity in Game RAG Benchmarks](https://arxiv.org/pdf/2510.18455) (ICLR 2026)
 - **Dataset**: [HuggingFace - ChronoPlay-QA (Leaderboard)](https://huggingface.co/datasets/leoner24/ChronoPlay-QA)
 - **Leaderboard**: [Submit your results and compare with others](https://hly1998.github.io/ChronoPlay/)
 - **Full Dataset**: [Weiyun Cloud Drive (with corpus)](https://share.weiyun.com/HGXd33CW) (password: chrono)
