@@ -5,80 +5,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChronoPlay RAG Leaderboard</title>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="vendor/jquery.dataTables.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --brand: #006EFF;
+            --brand-dark: #0054c4;
+            --navy: #0f1b2d;
+            --navy-mid: #1a2a42;
+            --navy-light: #243752;
+            --ink: #1a1a2e;
+            --text: #2d3748;
+            --text-secondary: #5a6577;
+            --text-muted: #8892a4;
+            --surface: #ffffff;
+            --surface-dim: #f7f8fb;
+            --surface-hover: #eef2f7;
+            --border: #e2e8f0;
+            --border-light: #edf2f7;
+            --accent-gold: #f6ad3c;
+            --accent-silver: #94a3b8;
+            --accent-bronze: #c27b3e;
+            --accent-red: #c53030;
+            --accent-green: #2f855a;
+            --accent-orange: #dd6b20;
+            --accent-purple: #6b46c1;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(15,27,45,0.06), 0 1px 2px rgba(15,27,45,0.04);
+            --shadow-md: 0 4px 14px rgba(15,27,45,0.08), 0 2px 6px rgba(15,27,45,0.04);
+            --shadow-lg: 0 10px 40px rgba(15,27,45,0.1), 0 4px 12px rgba(15,27,45,0.05);
+            --shadow-xl: 0 20px 60px rgba(15,27,45,0.12), 0 8px 20px rgba(15,27,45,0.06);
+            --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+            --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+            font-family: var(--font-body);
+            background-color: var(--surface-dim);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 3em;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-            font-weight: 500;
-        }
-
+        /* ─── HERO HEADER ───────────────────────────────── */
         .header-section {
-            background-color: white;
-            padding: 40px 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 40%, #1e3a5f 70%, #1a3354 100%);
+            padding: 60px 30px 50px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 600px 400px at 20% 50%, rgba(0,110,255,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 300px at 80% 30%, rgba(100,140,255,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .header-section::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .title-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 25px;
-            margin-bottom: 15px;
+            gap: 24px;
+            margin-bottom: 16px;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .logo-container img {
-            height: 80px;
-            width: auto;
+            height: 88px;
+            width: 88px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+            animation: logoFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
         .header-section h1 {
-            font-size: 3em;
+            font-family: var(--font-display);
+            font-size: 2.8em;
+            color: #ffffff;
             margin: 0;
-            color: #333;
+            letter-spacing: -0.01em;
+            text-shadow: 0 2px 20px rgba(0,110,255,0.3);
+            font-weight: 400;
         }
 
-        .header-section h2 {
-            margin-top: 0;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .header-section p {
-            line-height: 1.8;
-            font-size: 1.05em;
-            margin-bottom: 15px;
-            color: #555;
+        .subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1em;
+            font-weight: 400;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 24px;
+            letter-spacing: 0.02em;
         }
 
         .authors-section {
@@ -88,138 +154,385 @@
         }
 
         .authors-list {
-            font-size: 1em;
-            line-height: 1.8;
-            color: #333;
-            margin-bottom: 15px;
+            font-size: 0.95em;
+            line-height: 2;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 10px;
         }
 
         .author-name {
             font-weight: 600;
-            color: #333;
+            color: #ffffff;
         }
 
         .author-super {
             font-size: 0.75em;
             vertical-align: super;
-            color: #006EFF;
+            color: var(--brand);
         }
 
         .corresponding {
-            color: #d32f2f;
+            color: #ff6b6b;
         }
 
         .equal-contrib {
-            color: #006EFF;
+            color: var(--brand);
         }
 
         .affiliations {
-            font-size: 0.9em;
+            font-size: 0.85em;
             line-height: 1.6;
-            color: #666;
-            margin-top: 10px;
+            color: rgba(255,255,255,0.55);
+            margin-top: 6px;
         }
 
         .affiliation {
             display: inline-block;
-            margin-right: 15px;
+            margin-right: 16px;
         }
 
         .affiliation-number {
             font-size: 0.85em;
             vertical-align: super;
-            color: #006EFF;
+            color: rgba(0,110,255,0.8);
             font-weight: 600;
+        }
+
+        .header-description {
+            margin-top: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header-description p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1em;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .header-description strong {
+            color: #ffffff;
+        }
+
+        .methodology-callout {
+            background: rgba(0,110,255,0.1);
+            border: 1px solid rgba(0,110,255,0.2);
+            border-left: 3px solid var(--brand);
+            padding: 16px 20px;
+            border-radius: 8px;
+            text-align: left;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95em;
+            line-height: 1.7;
+            backdrop-filter: blur(4px);
+        }
+
+        .methodology-callout strong {
+            color: #ffffff;
         }
 
         .links-container {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             align-items: center;
-            margin-top: 25px;
+            margin-top: 30px;
             flex-wrap: wrap;
         }
 
         .resource-link {
             color: white;
-            padding: 12px 30px;
+            padding: 11px 28px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: 600;
-            display: inline-block;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 0.92em;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            letter-spacing: 0.02em;
+        }
+
+        .resource-link:hover {
+            text-decoration: none;
         }
 
         .github-link {
-            background-color: #006EFF;
-            /* Tencent Blue */
+            background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
         }
 
         .github-link:hover {
-            background-color: #0056cc;
+            background: linear-gradient(135deg, #1a7aff 0%, var(--brand) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 110, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(0,110,255,0.35);
         }
 
         .arxiv-link {
-            background-color: #b31b1b;
-            /* arXiv red */
+            background: linear-gradient(135deg, #c0392b 0%, #96281b 100%);
         }
 
         .arxiv-link:hover {
-            background-color: #8b1515;
+            background: linear-gradient(135deg, #d44637 0%, #b31b1b 100%);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(179, 27, 27, 0.3);
+            box-shadow: 0 6px 20px rgba(179,27,27,0.35);
         }
 
         .huggingface-link {
-            background-color: #FFD21E;
-            /* Hugging Face yellow */
+            background: linear-gradient(135deg, #FFD21E 0%, #f0c000 100%);
             color: #333;
         }
 
         .huggingface-link:hover {
-            background-color: #FFC107;
+            background: linear-gradient(135deg, #ffe04a 0%, #FFD21E 100%);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 210, 30, 0.3);
+            box-shadow: 0 6px 20px rgba(255,210,30,0.35);
+            color: #333;
+        }
+
+        /* ─── SCROLL NAV ────────────────────────────────── */
+        .scroll-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .scroll-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            overflow-x: auto;
+        }
+
+        .scroll-nav a {
+            padding: 14px 24px;
+            font-size: 0.88em;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            white-space: nowrap;
+            transition: color 0.2s;
+            position: relative;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .scroll-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 2px;
+            background: var(--brand);
+            transition: transform 0.25s;
+        }
+
+        .scroll-nav a:hover {
+            color: var(--brand);
+            text-decoration: none;
+        }
+
+        .scroll-nav a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* ─── MAIN CONTENT WRAPPER ──────────────────────── */
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ─── ABOUT SECTION ─────────────────────────────── */
+        .about-section {
+            padding: 64px 0 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.78em;
+            font-weight: 500;
+            color: var(--brand);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.2em;
+            color: var(--ink);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .section-subtitle {
+            font-size: 1.05em;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .about-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 32px;
+            border: 1px solid var(--border-light);
+            transition: box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .about-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s, box-shadow 0.35s;
+        }
+
+        .about-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .about-card.visible:hover {
+            transform: translateY(-3px);
+        }
+
+        .about-card-number {
+            font-family: var(--font-mono);
+            font-size: 0.72em;
+            font-weight: 500;
+            color: var(--brand);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 24px 32px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-card-number::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .about-card-body {
+            padding: 16px 32px 28px;
+        }
+
+        .about-card-title {
+            font-family: var(--font-display);
+            font-size: 1.45em;
+            color: var(--ink);
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .about-card-text {
+            font-size: 0.97em;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            max-width: 720px;
+        }
+
+        .about-card-figure {
+            padding: 0 24px 24px;
+        }
+
+        .about-card-figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #fff;
+            display: block;
+        }
+
+        .about-card-figure figcaption {
+            font-size: 0.82em;
+            color: var(--text-muted);
+            margin-top: 10px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* ─── LEADERBOARD SECTION ───────────────────────── */
+        .leaderboard-section {
+            padding: 40px 0 48px;
         }
 
         .container {
-            background-color: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
         }
 
         .tabs {
             display: flex;
-            border-bottom: 2px solid #e0e0e0;
-            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 24px;
             overflow-x: auto;
+            gap: 0;
         }
 
         .tab {
-            padding: 15px 25px;
+            padding: 14px 24px;
             cursor: pointer;
             border: none;
             background: none;
-            font-size: 16px;
+            font-family: var(--font-body);
+            font-size: 0.92em;
             font-weight: 600;
-            color: #666;
-            transition: all 0.3s;
+            color: var(--text-muted);
+            transition: all 0.25s;
             white-space: nowrap;
+            position: relative;
+            letter-spacing: 0.01em;
         }
 
         .tab:hover {
-            color: #006EFF;
+            color: var(--brand);
         }
 
         .tab.active {
-            color: #006EFF;
-            border-bottom: 3px solid #006EFF;
-            margin-bottom: -2px;
+            color: var(--brand);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--brand);
+            border-radius: 2px 2px 0 0;
         }
 
         .tab-content {
@@ -230,52 +543,146 @@
             display: block;
         }
 
-        .leaderboard-table {
-            width: 100% !important;
-            font-size: 14px;
+        .tab-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.4em;
+            color: var(--ink);
+            margin-bottom: 20px;
+            font-weight: 400;
         }
 
-        .leaderboard-table thead th {
-            background-color: #006EFF;
-            color: white;
+        /* ─── TABLE STYLES ──────────────────────────────── */
+        .leaderboard-table {
+            width: 100% !important;
+            font-size: 0.9em;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        table.dataTable.leaderboard-table thead th {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%) !important;
+            color: rgba(255,255,255,0.95) !important;
             font-weight: 600;
-            padding: 12px 8px;
+            padding: 14px 12px;
             text-align: center;
+            font-size: 0.88em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border-bottom: none;
+        }
+
+        table.dataTable.leaderboard-table thead th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        table.dataTable.leaderboard-table thead th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .leaderboard-table tbody tr {
+            transition: background-color 0.15s;
         }
 
         .leaderboard-table tbody tr:hover {
-            background-color: #f5f5f5;
+            background-color: var(--surface-hover) !important;
         }
 
         .leaderboard-table tbody td {
-            padding: 10px 8px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        .leaderboard-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* DataTables overrides */
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-family: var(--font-body);
+            font-size: 0.9em;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus {
+            border-color: var(--brand);
+            box-shadow: 0 0 0 3px rgba(0,110,255,0.1);
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-family: var(--font-body);
+        }
+
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            font-size: 0.85em;
+            color: var(--text-muted);
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            border-radius: 6px !important;
+            border: 1px solid var(--border) !important;
+            font-size: 0.85em;
+            padding: 4px 10px !important;
+            margin: 0 2px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: var(--brand) !important;
+            color: #fff !important;
+            border-color: var(--brand) !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: var(--surface-hover) !important;
+            border-color: var(--brand) !important;
+            color: var(--brand) !important;
+        }
+
+        table.dataTable thead .sorting::after,
+        table.dataTable thead .sorting_asc::after,
+        table.dataTable thead .sorting_desc::after {
+            opacity: 0.7;
         }
 
         .rank-badge {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 0.85em;
             color: white;
+            font-family: var(--font-body);
         }
 
         .rank-1 {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            box-shadow: 0 2px 8px rgba(245,158,11,0.35);
         }
 
         .rank-2 {
-            background: linear-gradient(135deg, #C0C0C0, #808080);
+            background: linear-gradient(135deg, #94a3b8, #64748b);
+            box-shadow: 0 2px 8px rgba(100,116,139,0.3);
         }
 
         .rank-3 {
-            background: linear-gradient(135deg, #CD7F32, #8B4513);
+            background: linear-gradient(135deg, #d97706, #b45309);
+            box-shadow: 0 2px 8px rgba(180,83,9,0.3);
         }
 
         .rank-other {
-            background-color: #999;
+            background-color: var(--text-muted);
         }
 
         .system-info {
@@ -284,21 +691,23 @@
 
         .system-name {
             font-weight: 600;
-            color: #333;
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
+            transition: color 0.2s;
         }
 
         .system-name:hover {
-            color: #006EFF;
+            color: var(--brand);
         }
 
         .expand-icon {
-            font-size: 0.8em;
-            color: #006EFF;
+            font-size: 0.75em;
+            color: var(--brand);
             transition: transform 0.3s;
+            flex-shrink: 0;
         }
 
         .expand-icon.expanded {
@@ -306,15 +715,15 @@
         }
 
         .system-description {
-            font-size: 0.9em;
-            color: #666;
+            font-size: 0.88em;
+            color: var(--text-secondary);
             margin-top: 8px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-left: 3px solid #006EFF;
-            border-radius: 4px;
+            padding: 10px 14px;
+            background-color: var(--surface-dim);
+            border-left: 3px solid var(--brand);
+            border-radius: 0 6px 6px 0;
             display: none;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .system-description.show {
@@ -324,344 +733,621 @@
         .metric-score {
             font-weight: 600;
             text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.92em;
+            color: var(--text);
         }
 
         .total-score {
             font-weight: 700;
-            color: #006EFF;
-            font-size: 1.1em;
+            color: var(--brand);
+            font-size: 1.05em;
             text-align: center;
+            font-family: var(--font-mono);
         }
 
         a {
-            color: #006EFF;
+            color: var(--brand);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         a:hover {
+            color: var(--brand-dark);
             text-decoration: underline;
         }
 
         .game-badge {
             display: inline-block;
             padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 0.85em;
+            border-radius: 4px;
+            font-size: 0.82em;
             font-weight: 600;
             margin: 2px;
         }
 
         .badge-dune {
             background-color: #e6f2ff;
-            color: #006EFF;
+            color: var(--brand);
         }
 
         .badge-dying-light {
             background-color: #fff3e0;
-            color: #f57c00;
+            color: var(--accent-orange);
         }
 
         .badge-pubg {
             background-color: #f3e5f5;
-            color: #7b1fa2;
+            color: var(--accent-purple);
         }
 
+        /* ─── METRICS LEGEND ────────────────────────────── */
         .metrics-legend {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border-left: 4px solid #006EFF;
+            margin-top: 28px;
+            padding: 24px 28px;
+            background-color: var(--surface-dim);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--brand);
         }
 
         .metrics-legend h3 {
             margin-top: 0;
-            color: #333;
-            font-size: 1.2em;
+            margin-bottom: 16px;
+            font-family: var(--font-display);
+            color: var(--ink);
+            font-size: 1.15em;
+            font-weight: 400;
+        }
+
+        .metrics-legend p {
+            margin-bottom: 8px;
         }
 
         .metrics-legend ul {
-            margin: 10px 0;
+            margin: 8px 0 16px;
             padding-left: 20px;
         }
 
         .metrics-legend li {
-            margin: 8px 0;
-            line-height: 1.6;
+            margin: 6px 0;
+            line-height: 1.7;
+            font-size: 0.93em;
+            color: var(--text-secondary);
         }
 
         .metrics-legend strong {
-            color: #006EFF;
+            color: var(--brand);
+            font-weight: 600;
+        }
+
+        .metrics-legend code {
+            font-family: var(--font-mono);
+            font-size: 0.88em;
+            background: var(--surface);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        /* ─── SUBMIT SECTION ────────────────────────────── */
+        .submit-section {
+            padding: 0 0 48px;
         }
 
         .submit-info {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #e8f5e9;
-            border-radius: 8px;
-            border-left: 4px solid #4CAF50;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--accent-green);
+            margin-top: 0;
         }
 
         .submit-info h3 {
             margin-top: 0;
-            color: #2e7d32;
+            margin-bottom: 16px;
+            font-family: var(--font-display);
+            color: var(--ink);
+            font-size: 1.25em;
+            font-weight: 400;
+        }
+
+        .submit-info ol {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .submit-info li {
+            margin: 8px 0;
+            line-height: 1.7;
+            font-size: 0.95em;
+            color: var(--text-secondary);
         }
 
         .submit-info code {
-            background-color: #fff;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
+            background-color: var(--surface-dim);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.88em;
+            border: 1px solid var(--border);
         }
 
         .submit-info pre {
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 5px;
+            background-color: var(--navy);
+            color: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 8px;
             overflow-x: auto;
-            border: 1px solid #ddd;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            line-height: 1.6;
         }
 
+        .submit-info pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            color: inherit;
+            font-size: inherit;
+        }
+
+        .submit-info p {
+            font-size: 0.93em;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .submit-info p strong {
+            color: var(--text);
+        }
+
+        /* ─── CITATION SECTION ──────────────────────────── */
+        .citation-section {
+            padding: 0 0 64px;
+        }
+
+        .citation-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--brand);
+        }
+
+        .citation-card h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-family: var(--font-display);
+            color: var(--ink);
+            font-size: 1.25em;
+            font-weight: 400;
+        }
+
+        .citation-card > p {
+            font-size: 0.93em;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .citation-card pre {
+            background-color: var(--navy);
+            color: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .citation-card pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .citation-resources {
+            font-size: 0.93em;
+            color: var(--text-secondary);
+        }
+
+        .citation-resources strong {
+            color: var(--text);
+        }
+
+        /* ─── FOOTER ────────────────────────────────────── */
+        .page-footer {
+            background: var(--navy);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .page-footer p {
+            font-size: 0.85em;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .page-footer a {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .page-footer a:hover {
+            color: #ffffff;
+        }
+
+        /* ─── LOADING / ERROR ───────────────────────────── */
         .loading {
             text-align: center;
-            padding: 40px;
-            color: #666;
+            padding: 48px;
+            color: var(--text-muted);
+        }
+
+        .loading p {
+            font-size: 0.95em;
         }
 
         .error {
             text-align: center;
-            padding: 40px;
-            color: #d32f2f;
+            padding: 48px;
+            color: var(--accent-red);
         }
 
+        /* ─── RESPONSIVE ────────────────────────────────── */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
+            .header-section {
+                padding: 40px 20px 36px;
             }
 
-            h1 {
-                font-size: 2em;
+            .header-section h1 {
+                font-size: 1.8em;
             }
 
             .logo-container img {
-                height: 50px;
+                height: 56px;
             }
 
             .title-container {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
+            }
+
+            .subtitle {
+                font-size: 0.95em;
             }
 
             .links-container {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
             }
 
             .resource-link {
                 width: 100%;
-                text-align: center;
+                justify-content: center;
+            }
+
+            .scroll-nav a {
+                padding: 12px 16px;
+                font-size: 0.8em;
+            }
+
+            .page-content {
+                padding: 0 16px;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .about-card-number {
+                padding: 20px 20px 0;
+            }
+
+            .about-card-body {
+                padding: 12px 20px 20px;
+            }
+
+            .about-card-figure {
+                padding: 0 16px 16px;
+            }
+
+            .about-card-title {
+                font-size: 1.2em;
+            }
+
+            .container {
+                padding: 20px 16px;
+                border-radius: var(--radius);
             }
 
             .tab {
-                padding: 12px 15px;
-                font-size: 14px;
+                padding: 12px 16px;
+                font-size: 0.85em;
+            }
+
+            .submit-info,
+            .citation-card {
+                padding: 24px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-section h1 {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.35em;
+            }
+
+            .about-section {
+                padding: 40px 0 24px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="header-section">
-        <div class="title-container">
-            <div class="logo-container">
-                <img src="logo.png" alt="ChronoPlay Logo">
+    <!-- ═══ HERO HEADER ═══ -->
+    <div class="header-section" id="top">
+        <div class="header-inner">
+            <div class="title-container">
+                <div class="logo-container">
+                    <img src="logo.png" alt="ChronoPlay Logo">
+                </div>
+                <h1>ChronoPlay RAG Leaderboard</h1>
             </div>
-            <h1>ChronoPlay RAG Leaderboard</h1>
-        </div>
-        <p class="subtitle" style="color: #006EFF;">A Framework for Modeling Dual Dynamics and Authenticity in Game RAG
-            Benchmarks</p>
+            <p class="subtitle">A Framework for Modeling Dual Dynamics and Authenticity in Game RAG Benchmarks</p>
 
-        <div class="authors-section">
-            <div class="authors-list">
-                <span class="author-name">Liyang He</span><span class="author-super">1</span>,
-                <span class="author-name">Yuren Zhang</span><span class="author-super">1</span>,
-                <span class="author-name">Ziwei Zhu</span><span class="author-super">2</span>,
-                <span class="author-name">Zhenghui Li</span><span class="author-super">3</span>,
-                <span class="author-name">Shiwei Tong</span><span class="author-super corresponding">1,†</span>
-            </div>
-            <div class="affiliations">
-                <span class="affiliation"><span class="affiliation-number">1</span>Tencent</span>
-                <span class="affiliation"><span class="affiliation-number">2</span>The Chinese University of Hong
-                    Kong</span>
-                <span class="affiliation"><span class="affiliation-number">3</span>Independent Researcher</span>
-            </div>
-            <div style="font-size: 0.85em; color: #999; margin-top: 10px;">
-                <span class="corresponding">†</span> Corresponding author: shiweitong@tencent.com
-            </div>
-        </div>
-
-        <div style="margin-top: 30px; margin-bottom: 20px;">
-            <p>
-                <strong>ChronoPlay</strong> is a novel framework for automated and continuous generation of game
-                Retrieval Augmented Generation benchmarks. This leaderboard evaluates RAG systems across three popular
-                games:
-                <strong>Dune: Awakening</strong>, <strong>Dying Light 2</strong>, and <strong>PUBG Mobile</strong>.
-            </p>
-            <p
-                style="background-color: #f0f7ff; padding: 15px; border-left: 4px solid #006EFF; border-radius: 5px; margin-top: 15px;">
-                <strong>📊 Evaluation Methodology:</strong> While the original paper evaluates models across different
-                temporal
-                segments to capture the dual dynamics of game evolution, this leaderboard presents a <strong>holistic
-                    evaluation</strong>
-                for each game. Each system is assessed on the complete game dataset to provide a comprehensive measure
-                of
-                overall model performance, making it easier to compare different RAG approaches at a glance.
-            </p>
-        </div>
-
-        <div class="links-container">
-            <a href="https://github.com/hly1998/ChronoPlay" target="_blank" class="resource-link github-link">
-                <img src="github-mark.svg" alt="GitHub" height="24"
-                    style="vertical-align: middle; margin-right: 8px; filter: brightness(0) invert(1);">
-                GitHub
-            </a>
-            <a href="https://arxiv.org/abs/2510.18455" target="_blank" class="resource-link arxiv-link">
-                <img src="arxiv-logo.svg" alt="arXiv" height="24"
-                    style="vertical-align: middle; margin-right: 8px; filter: brightness(0) invert(1);">
-                Paper
-            </a>
-            <a href="https://huggingface.co/datasets/leoner24/ChronoPlay-QA" target="_blank"
-                class="resource-link huggingface-link">
-                <img src="hf-logo.svg" alt="Hugging Face" height="24"
-                    style="vertical-align: middle; margin-right: 8px;">
-                Dataset
-            </a>
-        </div>
-    </div>
-
-    <div class="container">
-        <div id="loading" class="loading">
-            <p>Loading...</p>
-        </div>
-
-        <div id="error" class="error" style="display: none;">
-            <p>Error loading data. Please try again later.</p>
-        </div>
-
-        <div id="content" style="display: none;">
-            <div class="tabs">
-                <button class="tab active" data-game="overall">🏆 Overall</button>
-                <button class="tab" data-game="dune">Dune: Awakening</button>
-                <button class="tab" data-game="dying_light_2">Dying Light 2</button>
-                <button class="tab" data-game="pubg_mobile">PUBG Mobile</button>
+            <div class="authors-section">
+                <div class="authors-list">
+                    <span class="author-name">Liyang He</span><span class="author-super">1</span>,
+                    <span class="author-name">Yuren Zhang</span><span class="author-super">1</span>,
+                    <span class="author-name">Ziwei Zhu</span><span class="author-super">2</span>,
+                    <span class="author-name">Zhenghui Li</span><span class="author-super">3</span>,
+                    <span class="author-name">Shiwei Tong</span><span class="author-super corresponding">1,&#8224;</span>
+                </div>
+                <div class="affiliations">
+                    <span class="affiliation"><span class="affiliation-number">1</span>Tencent</span>
+                    <span class="affiliation"><span class="affiliation-number">2</span>The Chinese University of Hong Kong</span>
+                    <span class="affiliation"><span class="affiliation-number">3</span>Independent Researcher</span>
+                </div>
+                <div style="font-size: 0.82em; color: rgba(255,255,255,0.4); margin-top: 8px;">
+                    <span class="corresponding">&#8224;</span> Corresponding author: shiweitong@tencent.com
+                </div>
             </div>
 
-            <div id="overall-content" class="tab-content active">
-                <h2 style="color: #006EFF; margin-bottom: 15px;">Overall Rankings (Average Across All Games)</h2>
-                <table id="overall-table" class="leaderboard-table display">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>System</th>
-                            <th>Top-K</th>
-                            <th>R</th>
-                            <th>G</th>
-                            <th>Total Score</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <div class="header-description">
+                <p>
+                    <strong>ChronoPlay</strong> is a novel framework for automated and continuous generation of game
+                    Retrieval Augmented Generation benchmarks. This leaderboard evaluates RAG systems across three popular
+                    games:
+                    <strong>Dune: Awakening</strong>, <strong>Dying Light 2</strong>, and <strong>PUBG Mobile</strong>.
+                </p>
+                <div class="methodology-callout">
+                    <strong>Evaluation Methodology:</strong> Building on ChronoPlay's dual-dynamic temporal analysis, this leaderboard provides a <strong>holistic
+                    evaluation</strong> for each game. Each system is assessed on the complete game dataset, offering a comprehensive measure
+                    of overall RAG performance across all temporal segments at a glance.
+                </div>
             </div>
 
-            <div id="dune-content" class="tab-content">
-                <h2 style="color: #006EFF; margin-bottom: 15px;">Dune: Awakening Rankings</h2>
-                <table id="dune-table" class="leaderboard-table display">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>System</th>
-                            <th>Top-K</th>
-                            <th>R</th>
-                            <th>G</th>
-                            <th>Total Score</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <div id="dying_light_2-content" class="tab-content">
-                <h2 style="color: #006EFF; margin-bottom: 15px;">Dying Light 2 Rankings</h2>
-                <table id="dying_light_2-table" class="leaderboard-table display">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>System</th>
-                            <th>Top-K</th>
-                            <th>R</th>
-                            <th>G</th>
-                            <th>Total Score</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <div id="pubg_mobile-content" class="tab-content">
-                <h2 style="color: #006EFF; margin-bottom: 15px;">PUBG Mobile Rankings</h2>
-                <table id="pubg_mobile-table" class="leaderboard-table display">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>System</th>
-                            <th>Top-K</th>
-                            <th>R</th>
-                            <th>G</th>
-                            <th>Total Score</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <div class="metrics-legend">
-                <h3>📊 Evaluation Metrics</h3>
-                <p><strong>Base Metrics:</strong></p>
-                <ul>
-                    <li><strong>Recall:</strong> Proportion of relevant documents found in top-k retrieval results</li>
-                    <li><strong>F1:</strong> Harmonic mean of precision and recall at top-k</li>
-                    <li><strong>NDCG:</strong> Normalized Discounted Cumulative Gain, considers ranking quality</li>
-                    <li><strong>Correctness:</strong> Accuracy of generated answers</li>
-                    <li><strong>Faithfulness:</strong> Consistency of generated answers with retrieved documents</li>
-                </ul>
-                <p><strong>Computed Scores:</strong></p>
-                <ul>
-                    <li><strong>R (Retrieval Score):</strong> Average of Recall, F1, and NDCG
-                        <br><code>R = (Recall + F1 + NDCG) / 3</code>
-                    </li>
-                    <li><strong>G (Generation Score):</strong> Weighted average of Correctness (75%) and Faithfulness
-                        (25%)
-                        <br><code>G = Correctness × 0.75 + Faithfulness × 0.25</code>
-                    </li>
-                    <li><strong>Total Score:</strong> Weighted average of Retrieval (25%) and Generation (75%)
-                        <br><code>Total = R × 0.25 + G × 0.75</code>
-                    </li>
-                </ul>
-                <p><strong>Note:</strong> All scores are displayed as percentages (0-100). The Top-K value indicates the
-                    number of documents retrieved for each query.</p>
+            <div class="links-container">
+                <a href="https://github.com/hly1998/ChronoPlay" target="_blank" class="resource-link github-link">
+                    <img src="github-mark.svg" alt="GitHub" height="20"
+                        style="vertical-align: middle; margin-right: 8px; filter: brightness(0) invert(1);">
+                    GitHub
+                </a>
+                <a href="https://arxiv.org/abs/2510.18455" target="_blank" class="resource-link arxiv-link">
+                    <img src="arxiv-logo.svg" alt="arXiv" height="20"
+                        style="vertical-align: middle; margin-right: 8px; filter: brightness(0) invert(1);">
+                    Paper
+                </a>
+                <a href="https://huggingface.co/datasets/leoner24/ChronoPlay-QA" target="_blank"
+                    class="resource-link huggingface-link">
+                    <img src="hf-logo.svg" alt="Hugging Face" height="20"
+                        style="vertical-align: middle; margin-right: 8px;">
+                    Dataset
+                </a>
             </div>
         </div>
     </div>
 
-    <div class="submit-info">
-        <h3>📝 How to Submit Your Results?</h3>
-        <ol>
-            <li>Fork this repository</li>
-            <li>Create a new JSON file in the <code>submissions/</code> directory (e.g., <code>my_system.json</code>)
-            </li>
-            <li>Fill in your results in the following format:
-                <pre><code>{
+    <!-- ═══ STICKY NAV ═══ -->
+    <nav class="scroll-nav">
+        <div class="scroll-nav-inner">
+            <a href="#about">About</a>
+            <a href="#leaderboard">Leaderboard</a>
+            <a href="#submit">Submit</a>
+            <a href="#citation">Citation</a>
+        </div>
+    </nav>
+
+    <div class="page-content">
+
+        <!-- ═══ ABOUT CHRONOPLAY ═══ -->
+        <section class="about-section" id="about">
+            <div class="section-header">
+                <span class="section-label">Research Overview</span>
+                <h2 class="section-title">About ChronoPlay</h2>
+                <p class="section-subtitle">Understanding the dual dynamics that shape game knowledge and player behavior over time.</p>
+            </div>
+
+            <div class="about-card" data-reveal>
+                <div class="about-card-number">01 &mdash; Core Concept</div>
+                <div class="about-card-body">
+                    <h3 class="about-card-title">Dual Dynamics in Gaming</h3>
+                    <p class="about-card-text">Games evolve through two concurrent dynamics: <strong>Knowledge Evolution</strong>, where game content continuously updates through patches, expansions, and balance changes; and <strong>User Interest Drift</strong>, where player attention shifts across topics over time. ChronoPlay captures both dynamics to create temporally-aware benchmarks.</p>
+                </div>
+                <figure class="about-card-figure">
+                    <img src="images/demo_dual_dynamics.png" alt="Dual Dynamics: Knowledge Evolution and User Interest Drift" loading="lazy">
+                    <figcaption>Figure 1. Knowledge Evolution (top) tracks game content changes across versions; User Interest Drift (bottom) captures shifting player attention patterns.</figcaption>
+                </figure>
+            </div>
+
+            <div class="about-card" data-reveal>
+                <div class="about-card-number">02 &mdash; Data Pipeline</div>
+                <div class="about-card-body">
+                    <h3 class="about-card-title">Dual-Source Data Synthesis Pipeline</h3>
+                    <p class="about-card-text">ChronoPlay synthesizes benchmark data from two complementary sources: authoritative game knowledge bases (wikis, patch notes) and player community discussions (forums, social media). This dual-source approach ensures both factual accuracy and real-world relevance.</p>
+                </div>
+                <figure class="about-card-figure">
+                    <img src="images/pipeline.png" alt="Dual-Source Data Synthesis Pipeline" loading="lazy">
+                    <figcaption>Figure 2. The data synthesis pipeline combines authority knowledge with community-driven user personas to generate authentic, high-quality QA pairs.</figcaption>
+                </figure>
+            </div>
+
+            <div class="about-card" data-reveal>
+                <div class="about-card-number">03 &mdash; Update Mechanism</div>
+                <div class="about-card-body">
+                    <h3 class="about-card-title">Dual-Dynamic Update Mechanism</h3>
+                    <p class="about-card-text">The framework continuously evolves through NER-based knowledge updates that track game content changes, and interest drift detection that monitors shifting player attention patterns. This dual-dynamic mechanism keeps the benchmark aligned with the ever-changing game landscape.</p>
+                </div>
+                <figure class="about-card-figure">
+                    <img src="images/update_framework.png" alt="Dual-Dynamic Update Mechanism" loading="lazy">
+                    <figcaption>Figure 3. The update mechanism monitors official sources for knowledge changes and community forums for interest drift, triggering benchmark regeneration when significant shifts are detected.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- ═══ LEADERBOARD ═══ -->
+        <section class="leaderboard-section" id="leaderboard">
+            <div class="section-header">
+                <span class="section-label">Benchmark Results</span>
+                <h2 class="section-title">Leaderboard</h2>
+                <p class="section-subtitle">Comparing RAG system performance across all three game domains.</p>
+            </div>
+
+            <div class="container">
+                <div id="loading" class="loading">
+                    <p>Loading leaderboard data&hellip;</p>
+                </div>
+
+                <div id="error" class="error" style="display: none;">
+                    <p>Error loading data. Please try again later.</p>
+                </div>
+
+                <div id="content" style="display: none;">
+                    <div class="tabs">
+                        <button class="tab active" data-game="overall">Overall</button>
+                        <button class="tab" data-game="dune">Dune: Awakening</button>
+                        <button class="tab" data-game="dying_light_2">Dying Light 2</button>
+                        <button class="tab" data-game="pubg_mobile">PUBG Mobile</button>
+                    </div>
+
+                    <div id="overall-content" class="tab-content active">
+                        <h2>Overall Rankings</h2>
+                        <table id="overall-table" class="leaderboard-table display">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>System</th>
+                                    <th>Top-K</th>
+                                    <th>R</th>
+                                    <th>G</th>
+                                    <th>Total Score</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div id="dune-content" class="tab-content">
+                        <h2>Dune: Awakening Rankings</h2>
+                        <table id="dune-table" class="leaderboard-table display">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>System</th>
+                                    <th>Top-K</th>
+                                    <th>R</th>
+                                    <th>G</th>
+                                    <th>Total Score</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div id="dying_light_2-content" class="tab-content">
+                        <h2>Dying Light 2 Rankings</h2>
+                        <table id="dying_light_2-table" class="leaderboard-table display">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>System</th>
+                                    <th>Top-K</th>
+                                    <th>R</th>
+                                    <th>G</th>
+                                    <th>Total Score</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div id="pubg_mobile-content" class="tab-content">
+                        <h2>PUBG Mobile Rankings</h2>
+                        <table id="pubg_mobile-table" class="leaderboard-table display">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>System</th>
+                                    <th>Top-K</th>
+                                    <th>R</th>
+                                    <th>G</th>
+                                    <th>Total Score</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="metrics-legend">
+                        <h3>Evaluation Metrics</h3>
+                        <p><strong>Base Metrics:</strong></p>
+                        <ul>
+                            <li><strong>Recall:</strong> Proportion of relevant documents found in top-k retrieval results</li>
+                            <li><strong>F1:</strong> Harmonic mean of precision and recall at top-k</li>
+                            <li><strong>NDCG:</strong> Normalized Discounted Cumulative Gain, considers ranking quality</li>
+                            <li><strong>Correctness:</strong> Accuracy of generated answers</li>
+                            <li><strong>Faithfulness:</strong> Consistency of generated answers with retrieved documents</li>
+                        </ul>
+                        <p><strong>Computed Scores:</strong></p>
+                        <ul>
+                            <li><strong>R (Retrieval Score):</strong> Average of Recall, F1, and NDCG
+                                <br><code>R = (Recall + F1 + NDCG) / 3</code>
+                            </li>
+                            <li><strong>G (Generation Score):</strong> Weighted average of Correctness (75%) and Faithfulness (25%)
+                                <br><code>G = Correctness &times; 0.75 + Faithfulness &times; 0.25</code>
+                            </li>
+                            <li><strong>Total Score:</strong> Weighted average of Retrieval (25%) and Generation (75%)
+                                <br><code>Total = R &times; 0.25 + G &times; 0.75</code>
+                            </li>
+                        </ul>
+                        <p style="margin-bottom: 0;"><strong>Note:</strong> All scores are displayed as percentages (0-100). The Top-K value indicates the number of documents retrieved for each query.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ SUBMIT ═══ -->
+        <section class="submit-section" id="submit">
+            <div class="submit-info">
+                <h3>How to Submit Your Results</h3>
+                <ol>
+                    <li>Fork this repository</li>
+                    <li>Create a new JSON file in the <code>submissions/</code> directory (e.g., <code>my_system.json</code>)</li>
+                    <li>Fill in your results in the following format:
+                        <pre><code>{
   "system_name": "My RAG System v1.0",
   "description": "Dense retrieval with BM25 reranking and GPT-4 for generation",
   "games": {
@@ -691,38 +1377,47 @@
     }
   }
 }</code></pre>
-            </li>
-            <li>Submit a Pull Request</li>
-            <li>After the PR is merged, the leaderboard will be automatically updated</li>
-        </ol>
-        <p><strong>Note:</strong> All metric scores (recall, f1, ndcg, correctness, faithfulness) should be decimals
-            between 0-1.
-            The scores R, G, and Total Score will be calculated automatically by the frontend. You must provide results
-            for all three games.</p>
-    </div>
+                    </li>
+                    <li>Submit a Pull Request</li>
+                    <li>After the PR is merged, the leaderboard will be automatically updated</li>
+                </ol>
+                <p><strong>Note:</strong> All metric scores (recall, f1, ndcg, correctness, faithfulness) should be decimals
+                    between 0-1. The scores R, G, and Total Score will be calculated automatically by the frontend. You must provide results for all three games.</p>
+            </div>
+        </section>
 
-    <div class="container" style="margin-top: 30px; background-color: #f9f9f9; border-left: 4px solid #006EFF;">
-        <h3 style="color: #333; margin-top: 0;">📚 Citation</h3>
-        <p>If you use this leaderboard or the ChronoPlay benchmark in your research, please cite our paper:</p>
-        <pre
-            style="background-color: #fff; padding: 20px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; font-size: 0.9em; line-height: 1.6;"><code>@article{he2025chronoplay,
+        <!-- ═══ CITATION ═══ -->
+        <section class="citation-section" id="citation">
+            <div class="citation-card">
+                <h3>Citation</h3>
+                <p>If you use this leaderboard or the ChronoPlay benchmark in your research, please cite our paper:</p>
+                <pre><code>@article{he2025chronoplay,
   title={ChronoPlay: A Framework for Modeling Dual Dynamics and Authenticity in Game RAG Benchmarks},
   author={He, Liyang and Zhang, Yuren and Zhu, Ziwei and Li, Zhenghui and Tong, Shiwei},
   journal={arXiv preprint arXiv:2510.18455},
   year={2025}
 }</code></pre>
-        <p style="margin-bottom: 0;">
-            <strong>Resources:</strong>
-            <a href="https://arxiv.org/abs/2510.18455" target="_blank" style="margin-left: 10px;">Paper</a> |
-            <a href="https://github.com/hly1998/ChronoPlay" target="_blank" style="margin-left: 10px;">Code</a> |
-            <a href="https://huggingface.co/datasets/leoner24/ChronoPlay-QA" target="_blank"
-                style="margin-left: 10px;">Dataset</a>
-        </p>
+                <p class="citation-resources" style="margin-bottom: 0;">
+                    <strong>Resources:</strong>
+                    <a href="https://arxiv.org/abs/2510.18455" target="_blank" style="margin-left: 10px;">Paper</a> |
+                    <a href="https://github.com/hly1998/ChronoPlay" target="_blank" style="margin-left: 10px;">Code</a> |
+                    <a href="https://huggingface.co/datasets/leoner24/ChronoPlay-QA" target="_blank" style="margin-left: 10px;">Dataset</a>
+                </p>
+            </div>
+        </section>
+
     </div>
 
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="page-footer">
+        <p>ChronoPlay &copy; 2025 &middot; <a href="https://github.com/hly1998/ChronoPlay" target="_blank">GitHub</a> &middot; <a href="https://arxiv.org/abs/2510.18455" target="_blank">arXiv</a></p>
+    </footer>
+
+    <script type="text/javascript" charset="utf8" src="vendor/jquery-3.7.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="vendor/jquery.dataTables.min.js"></script>
+    <!-- LEADERBOARD_DATA_START -->
+    <script>window.__LEADERBOARD_DATA__ = [{"system_name": "bm25+Claude-3.5-Sonnet", "description": "Sparse retrieval using BM25 with Claude-3.5-Sonnet for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.113, "faithfulness": 0.519}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.279, "faithfulness": 0.547}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.274, "faithfulness": 0.441}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.239, "faithfulness": 0.498}}, {"system_name": "bm25+Claude-3.7-Sonnet", "description": "Sparse retrieval using BM25 with Claude-3.7-Sonnet for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.226, "faithfulness": 0.67}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.227, "faithfulness": 0.645}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.29, "faithfulness": 0.575}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.252, "faithfulness": 0.623}}, {"system_name": "bm25+Claude-Sonnet-4", "description": "Sparse retrieval using BM25 with Claude-Sonnet-4 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.226, "faithfulness": 0.566}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.262, "faithfulness": 0.552}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.312, "faithfulness": 0.5}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.274, "faithfulness": 0.534}}, {"system_name": "bm25+Claude-Sonnet-4.5", "description": "Sparse retrieval using BM25 with Claude-Sonnet-4.5 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.179, "faithfulness": 0.651}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.297, "faithfulness": 0.587}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.285, "faithfulness": 0.516}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.265, "faithfulness": 0.573}}, {"system_name": "bm25+DeepSeek-V3.1", "description": "Sparse retrieval using BM25 with DeepSeek-V3.1 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.236, "faithfulness": 0.585}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.302, "faithfulness": 0.68}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.312, "faithfulness": 0.586}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.291, "faithfulness": 0.621}}, {"system_name": "bm25+DeepSeek-V3.2-Exp", "description": "Sparse retrieval using BM25 with DeepSeek-V3.2-Exp for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.236, "faithfulness": 0.632}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.285, "faithfulness": 0.686}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.333, "faithfulness": 0.597}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.293, "faithfulness": 0.638}}, {"system_name": "bm25+GLM-4.5", "description": "Sparse retrieval using BM25 with GLM-4.5 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.217, "faithfulness": 0.632}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.285, "faithfulness": 0.581}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.36, "faithfulness": 0.457}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.3, "faithfulness": 0.543}}, {"system_name": "bm25+GPT-3.5-Turbo", "description": "Sparse retrieval using BM25 with GPT-3.5-Turbo for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.236, "faithfulness": 0.358}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.256, "faithfulness": 0.471}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.328, "faithfulness": 0.333}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.28, "faithfulness": 0.39}}, {"system_name": "bm25+GPT-4.1", "description": "Sparse retrieval using BM25 with GPT-4.1 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.274, "faithfulness": 0.491}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.407, "faithfulness": 0.39}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.511, "faithfulness": 0.344}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.418, "faithfulness": 0.394}}, {"system_name": "bm25+GPT-4o", "description": "Sparse retrieval using BM25 with GPT-4o for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.283, "faithfulness": 0.519}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.314, "faithfulness": 0.459}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.398, "faithfulness": 0.398}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.341, "faithfulness": 0.448}}, {"system_name": "bm25+GPT-5-Chat", "description": "Sparse retrieval using BM25 with GPT-5-Chat for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.292, "faithfulness": 0.415}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.401, "faithfulness": 0.372}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.511, "faithfulness": 0.366}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.42, "faithfulness": 0.379}}, {"system_name": "bm25+Gemini-2.5-Flash", "description": "Sparse retrieval using BM25 with Gemini-2.5-Flash for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.236, "faithfulness": 0.726}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.273, "faithfulness": 0.802}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.355, "faithfulness": 0.715}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.297, "faithfulness": 0.75}}, {"system_name": "bm25+Gemini-2.5-Pro", "description": "Sparse retrieval using BM25 with Gemini-2.5-Pro for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.198, "faithfulness": 0.708}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.267, "faithfulness": 0.767}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.355, "faithfulness": 0.726}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.287, "faithfulness": 0.737}}, {"system_name": "bm25+Grok-3", "description": "Sparse retrieval using BM25 with Grok-3 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.0, "faithfulness": 0.0}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.0, "faithfulness": 0.012}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.0, "faithfulness": 0.0}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.0, "faithfulness": 0.004}}, {"system_name": "bm25+Kimi-K2", "description": "Sparse retrieval using BM25 with Kimi-K2 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.264, "faithfulness": 0.491}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.308, "faithfulness": 0.459}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.349, "faithfulness": 0.435}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.315, "faithfulness": 0.457}}, {"system_name": "bm25+Llama-4-Scout", "description": "Sparse retrieval using BM25 with Llama-4-Scout for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.16, "faithfulness": 0.33}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.198, "faithfulness": 0.366}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.21, "faithfulness": 0.312}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.194, "faithfulness": 0.336}}, {"system_name": "bm25+O1", "description": "Sparse retrieval using BM25 with O1 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.34, "faithfulness": 0.509}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.395, "faithfulness": 0.442}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.452, "faithfulness": 0.403}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.405, "faithfulness": 0.442}}, {"system_name": "bm25+O3", "description": "Sparse retrieval using BM25 with O3 for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.0, "faithfulness": 0.0}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.0, "faithfulness": 0.023}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.0, "faithfulness": 0.011}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.0, "faithfulness": 0.013}}, {"system_name": "bm25+Qwen2.5-72B", "description": "Sparse retrieval using BM25 with Qwen2.5-72B for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.132, "faithfulness": 0.226}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.221, "faithfulness": 0.32}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.28, "faithfulness": 0.194}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.224, "faithfulness": 0.248}}, {"system_name": "bm25+Qwen3-Max", "description": "Sparse retrieval using BM25 with Qwen3-Max for generation", "games": {"dune": {"topk": 3, "recall": 0.642, "f1": 0.321, "ndcg": 0.534, "correctness": 0.189, "faithfulness": 0.425}, "dying_light_2": {"topk": 3, "recall": 0.628, "f1": 0.314, "ndcg": 0.576, "correctness": 0.291, "faithfulness": 0.39}, "pubg_mobile": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.783, "correctness": 0.392, "faithfulness": 0.43}}, "average": {"topk": 3, "recall": 0.72, "f1": 0.36, "ndcg": 0.649, "correctness": 0.308, "faithfulness": 0.414}}, {"system_name": "text-embedding-3-small+Claude-3.5-Sonnet", "description": "Dense retrieval using text-embedding-3-small with Claude-3.5-Sonnet for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.189, "faithfulness": 0.481}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.355, "faithfulness": 0.506}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.323, "faithfulness": 0.457}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.304, "faithfulness": 0.481}}, {"system_name": "text-embedding-3-small+Claude-3.7-Sonnet", "description": "Dense retrieval using text-embedding-3-small with Claude-3.7-Sonnet for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.245, "faithfulness": 0.66}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.285, "faithfulness": 0.61}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.349, "faithfulness": 0.559}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.302, "faithfulness": 0.601}}, {"system_name": "text-embedding-3-small+Claude-Sonnet-4", "description": "Dense retrieval using text-embedding-3-small with Claude-Sonnet-4 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.236, "faithfulness": 0.632}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.355, "faithfulness": 0.558}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.312, "faithfulness": 0.505}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.31, "faithfulness": 0.554}}, {"system_name": "text-embedding-3-small+Claude-Sonnet-4.5", "description": "Dense retrieval using text-embedding-3-small with Claude-Sonnet-4.5 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.255, "faithfulness": 0.632}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.378, "faithfulness": 0.605}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.355, "faithfulness": 0.532}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.341, "faithfulness": 0.582}}, {"system_name": "text-embedding-3-small+DeepSeek-V3.1", "description": "Dense retrieval using text-embedding-3-small with DeepSeek-V3.1 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.17, "faithfulness": 0.396}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.256, "faithfulness": 0.442}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.398, "faithfulness": 0.613}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.293, "faithfulness": 0.5}}, {"system_name": "text-embedding-3-small+DeepSeek-V3.2-Exp", "description": "Dense retrieval using text-embedding-3-small with DeepSeek-V3.2-Exp for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.321, "faithfulness": 0.613}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.36, "faithfulness": 0.674}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.349, "faithfulness": 0.602}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.347, "faithfulness": 0.631}}, {"system_name": "text-embedding-3-small+GLM-4.5", "description": "Dense retrieval using text-embedding-3-small with GLM-4.5 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.245, "faithfulness": 0.538}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.343, "faithfulness": 0.581}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.392, "faithfulness": 0.473}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.341, "faithfulness": 0.528}}, {"system_name": "text-embedding-3-small+GPT-3.5-Turbo", "description": "Dense retrieval using text-embedding-3-small with GPT-3.5-Turbo for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.311, "faithfulness": 0.415}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.378, "faithfulness": 0.564}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.36, "faithfulness": 0.392}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.356, "faithfulness": 0.461}}, {"system_name": "text-embedding-3-small+GPT-4.1", "description": "Dense retrieval using text-embedding-3-small with GPT-4.1 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.302, "faithfulness": 0.443}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.477, "faithfulness": 0.448}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.495, "faithfulness": 0.366}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.444, "faithfulness": 0.414}}, {"system_name": "text-embedding-3-small+GPT-4o", "description": "Dense retrieval using text-embedding-3-small with GPT-4o for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.292, "faithfulness": 0.5}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.39, "faithfulness": 0.628}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.419, "faithfulness": 0.419}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.379, "faithfulness": 0.515}}, {"system_name": "text-embedding-3-small+GPT-5-Chat", "description": "Dense retrieval using text-embedding-3-small with GPT-5-Chat for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.33, "faithfulness": 0.472}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.459, "faithfulness": 0.529}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.468, "faithfulness": 0.339}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.433, "faithfulness": 0.44}}, {"system_name": "text-embedding-3-small+Gemini-2.5-Flash", "description": "Dense retrieval using text-embedding-3-small with Gemini-2.5-Flash for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.283, "faithfulness": 0.802}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.366, "faithfulness": 0.797}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.419, "faithfulness": 0.769}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.369, "faithfulness": 0.787}}, {"system_name": "text-embedding-3-small+Gemini-2.5-Pro", "description": "Dense retrieval using text-embedding-3-small with Gemini-2.5-Pro for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.311, "faithfulness": 0.84}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.349, "faithfulness": 0.779}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.403, "faithfulness": 0.774}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.362, "faithfulness": 0.791}}, {"system_name": "text-embedding-3-small+Grok-3", "description": "Dense retrieval using text-embedding-3-small with Grok-3 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.189, "faithfulness": 0.396}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.314, "faithfulness": 0.529}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.323, "faithfulness": 0.376}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.289, "faithfulness": 0.438}}, {"system_name": "text-embedding-3-small+Kimi-K2", "description": "Dense retrieval using text-embedding-3-small with Kimi-K2 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.34, "faithfulness": 0.396}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.413, "faithfulness": 0.494}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.409, "faithfulness": 0.339}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.394, "faithfulness": 0.409}}, {"system_name": "text-embedding-3-small+Llama-4-Scout", "description": "Dense retrieval using text-embedding-3-small with Llama-4-Scout for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.16, "faithfulness": 0.368}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.279, "faithfulness": 0.43}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.242, "faithfulness": 0.317}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.237, "faithfulness": 0.371}}, {"system_name": "text-embedding-3-small+O1", "description": "Dense retrieval using text-embedding-3-small with O1 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.415, "faithfulness": 0.491}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.512, "faithfulness": 0.506}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.538, "faithfulness": 0.376}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.5, "faithfulness": 0.45}}, {"system_name": "text-embedding-3-small+O3", "description": "Dense retrieval using text-embedding-3-small with O3 for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.368, "faithfulness": 0.264}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.57, "faithfulness": 0.32}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.543, "faithfulness": 0.237}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.513, "faithfulness": 0.274}}, {"system_name": "text-embedding-3-small+Qwen2.5-72B", "description": "Dense retrieval using text-embedding-3-small with Qwen2.5-72B for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.208, "faithfulness": 0.198}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.25, "faithfulness": 0.32}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.323, "faithfulness": 0.237}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.269, "faithfulness": 0.259}}, {"system_name": "text-embedding-3-small+Qwen3-Max", "description": "Dense retrieval using text-embedding-3-small with Qwen3-Max for generation", "games": {"dune": {"topk": 3, "recall": 0.849, "f1": 0.425, "ndcg": 0.774, "correctness": 0.226, "faithfulness": 0.34}, "dying_light_2": {"topk": 3, "recall": 0.872, "f1": 0.436, "ndcg": 0.79, "correctness": 0.413, "faithfulness": 0.488}, "pubg_mobile": {"topk": 3, "recall": 0.957, "f1": 0.478, "ndcg": 0.901, "correctness": 0.387, "faithfulness": 0.398}}, "average": {"topk": 3, "recall": 0.901, "f1": 0.45, "ndcg": 0.831, "correctness": 0.36, "faithfulness": 0.418}}];</script>
+    <!-- LEADERBOARD_DATA_END -->
 
     <script>
         $(document).ready(function () {
@@ -844,7 +1539,42 @@
                 });
             }
 
-            // Load data
+            // Render leaderboard data
+            function renderLeaderboard(data) {
+                $('#loading').hide();
+
+                if (data.length === 0) {
+                    $('#error').html('<p>No data available. Be the first to submit!</p>').show();
+                    return;
+                }
+
+                // Populate all tables
+                populateTable('overall-table', data, 'average');
+                populateTable('dune-table', data, 'dune');
+                populateTable('dying_light_2-table', data, 'dying_light_2');
+                populateTable('pubg_mobile-table', data, 'pubg_mobile');
+
+                // Initialize DataTables
+                initDataTable('overall-table');
+                initDataTable('dune-table');
+                initDataTable('dying_light_2-table');
+                initDataTable('pubg_mobile-table');
+
+                // Add event listener for system name clicks (event delegation)
+                $(document).on('click', '.system-name', function () {
+                    const id = $(this).data('id');
+                    const desc = $('#desc-' + id);
+                    const icon = $('#icon-' + id);
+                    if (desc.length) {
+                        desc.toggleClass('show');
+                        icon.toggleClass('expanded');
+                    }
+                });
+
+                $('#content').show();
+            }
+
+            // Load data: try fetch first (works on HTTP), fall back to embedded JS data (works on file://)
             fetch(dataUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -852,44 +1582,36 @@
                     }
                     return response.json();
                 })
-                .then(data => {
-                    $('#loading').hide();
-
-                    if (data.length === 0) {
-                        $('#error').html('<p>No data available. Be the first to submit!</p>').show();
-                        return;
+                .then(data => renderLeaderboard(data))
+                .catch(error => {
+                    console.warn('fetch failed, trying embedded data:', error);
+                    if (window.__LEADERBOARD_DATA__) {
+                        renderLeaderboard(window.__LEADERBOARD_DATA__);
+                    } else {
+                        console.error('No data source available');
+                        $('#loading').hide();
+                        $('#error').show();
                     }
+                });
 
-                    // Populate all tables
-                    populateTable('overall-table', data, 'average');
-                    populateTable('dune-table', data, 'dune');
-                    populateTable('dying_light_2-table', data, 'dying_light_2');
-                    populateTable('pubg_mobile-table', data, 'pubg_mobile');
-
-                    // Initialize DataTables
-                    initDataTable('overall-table');
-                    initDataTable('dune-table');
-                    initDataTable('dying_light_2-table');
-                    initDataTable('pubg_mobile-table');
-
-                    // Add event listener for system name clicks (event delegation)
-                    $(document).on('click', '.system-name', function () {
-                        const id = $(this).data('id');
-                        const desc = $('#desc-' + id);
-                        const icon = $('#icon-' + id);
-                        if (desc.length) {
-                            desc.toggleClass('show');
-                            icon.toggleClass('expanded');
+            // ─── Scroll reveal for about cards ───
+            const revealEls = document.querySelectorAll('[data-reveal]');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, i) => {
+                        if (entry.isIntersecting) {
+                            const idx = Array.from(revealEls).indexOf(entry.target);
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, idx * 120);
+                            observer.unobserve(entry.target);
                         }
                     });
-
-                    $('#content').show();
-                })
-                .catch(error => {
-                    console.error('Error loading leaderboard data:', error);
-                    $('#loading').hide();
-                    $('#error').show();
-                });
+                }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+                revealEls.forEach(el => observer.observe(el));
+            } else {
+                revealEls.forEach(el => el.classList.add('visible'));
+            }
         });
     </script>
 </body>

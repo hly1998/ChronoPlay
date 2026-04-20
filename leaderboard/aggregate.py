@@ -213,13 +213,30 @@ def merge_data(existing: List[Dict[str, Any]],
 
 
 def save_leaderboard(data: List[Dict[str, Any]], leaderboard_file: Path):
-    """Save leaderboard data"""
+    """Save leaderboard data as JSON and embed into index.html for file:// compatibility"""
     # Sort by calculated total score descending
     data.sort(key=lambda x: calculate_total_score(x['average']), reverse=True)
 
     try:
+        json_str = json.dumps(data, ensure_ascii=False, indent=2)
+
+        # Save leaderboard.json
         with open(leaderboard_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+            f.write(json_str)
+
+        # Embed data into index.html so the page works when opened via file:// protocol
+        import re
+        index_file = leaderboard_file.with_name('index.html')
+        if index_file.exists():
+            html = index_file.read_text(encoding='utf-8')
+            # Replace the inline script between the marker comments
+            pattern = r'(<!-- LEADERBOARD_DATA_START -->\n\s*<script>).*?(</script>\n\s*<!-- LEADERBOARD_DATA_END -->)'
+            compact_json = json.dumps(data, ensure_ascii=False)
+            replacement = rf'\1window.__LEADERBOARD_DATA__ = {compact_json};\2'
+            new_html = re.sub(pattern, replacement, html, flags=re.DOTALL)
+            index_file.write_text(new_html, encoding='utf-8')
+            print(f"✅ Embedded data into index.html")
+
         print(f"\n✅ Successfully saved to {leaderboard_file}")
         print(f"📊 Leaderboard now has {len(data)} record(s)")
     except Exception as e:
